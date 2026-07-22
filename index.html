@@ -422,86 +422,31 @@
         </div>
       </div>
 
-      <div class="chip-stage reveal" aria-hidden="true">
-        <svg class="chip-svg" viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#4361FF" stop-opacity="0.55"/>
-              <stop offset="45%" stop-color="#2E1EE0" stop-opacity="0.26"/>
-              <stop offset="100%" stop-color="#2E1EE0" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="topface" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#EEEBFF"/>
-              <stop offset="52%" stop-color="#C7C0FF"/>
-              <stop offset="100%" stop-color="#9E90FF"/>
-            </linearGradient>
-            <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#3A2CB8"/>
-              <stop offset="100%" stop-color="#15104F"/>
-            </linearGradient>
-            <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8A93D6"/>
-              <stop offset="100%" stop-color="#5561AE"/>
-            </linearGradient>
-            <radialGradient id="die" cx="50%" cy="42%" r="62%">
-              <stop offset="0%" stop-color="#B8E4FF"/>
-              <stop offset="38%" stop-color="#4C7BFF"/>
-              <stop offset="100%" stop-color="#1B1470"/>
-            </radialGradient>
-            <filter id="softblur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
-            <filter id="boltglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4"/></filter>
-          </defs>
-
-          <!-- glow halo -->
-          <circle class="halo" cx="220" cy="220" r="176" fill="url(#halo)" filter="url(#softblur)"/>
-
-          <!-- electric-blue lightning -->
-          <g class="bolts" stroke="#7C95FF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#boltglow)">
-            <path class="bolt b1" d="M220 132 L213 104 L227 96 L217 58"/>
-            <path class="bolt b2" d="M300 150 L330 138 L320 122 L376 92"/>
-            <path class="bolt b3" d="M308 216 L346 208 L334 224 L400 214"/>
-            <path class="bolt b4" d="M300 300 L330 310 L318 326 L372 358"/>
-            <path class="bolt b5" d="M220 308 L214 338 L228 346 L219 386"/>
-            <path class="bolt b6" d="M140 300 L110 310 L122 326 L66 358"/>
-            <path class="bolt b7" d="M132 216 L96 208 L108 224 L44 214"/>
-            <path class="bolt b8" d="M140 150 L108 138 L120 122 L64 92"/>
-          </g>
-
-          <!-- chip -->
-          <g class="chip">
-            <!-- extruded body (depth) -->
-            <rect x="150" y="150" width="160" height="160" rx="18" fill="url(#body)"/>
-            <!-- pins -->
-            <g fill="url(#pin)">
-              <rect x="166" y="122" width="8" height="16" rx="2"/><rect x="192" y="122" width="8" height="16" rx="2"/><rect x="218" y="122" width="8" height="16" rx="2"/><rect x="244" y="122" width="8" height="16" rx="2"/><rect x="270" y="122" width="8" height="16" rx="2"/>
-              <rect x="166" y="298" width="8" height="16" rx="2"/><rect x="192" y="298" width="8" height="16" rx="2"/><rect x="218" y="298" width="8" height="16" rx="2"/><rect x="244" y="298" width="8" height="16" rx="2"/><rect x="270" y="298" width="8" height="16" rx="2"/>
-              <rect x="122" y="166" width="16" height="8" rx="2"/><rect x="122" y="192" width="16" height="8" rx="2"/><rect x="122" y="218" width="16" height="8" rx="2"/><rect x="122" y="244" width="16" height="8" rx="2"/><rect x="122" y="270" width="16" height="8" rx="2"/>
-              <rect x="302" y="166" width="16" height="8" rx="2"/><rect x="302" y="192" width="16" height="8" rx="2"/><rect x="302" y="218" width="16" height="8" rx="2"/><rect x="302" y="244" width="16" height="8" rx="2"/><rect x="302" y="270" width="16" height="8" rx="2"/>
-            </g>
-            <!-- top face -->
-            <rect x="140" y="136" width="160" height="160" rx="18" fill="url(#topface)" stroke="#8072FF" stroke-width="1.5"/>
-            <!-- circuit traces -->
-            <g stroke="#6E5CFF" stroke-width="1.4" opacity="0.45" fill="none" stroke-linecap="round">
-              <path d="M160 168 H185 V190"/><path d="M280 172 H255 V196"/><path d="M162 232 H188 V258"/><path d="M278 236 H252 V262"/>
-              <path d="M170 216 H150"/><path d="M290 216 H270"/><path d="M216 158 V140"/><path d="M224 292 V276"/>
-              <circle cx="160" cy="168" r="2.4" fill="#6E5CFF"/><circle cx="280" cy="172" r="2.4" fill="#6E5CFF"/><circle cx="162" cy="232" r="2.4" fill="#6E5CFF"/><circle cx="278" cy="236" r="2.4" fill="#6E5CFF"/>
-            </g>
-            <!-- glowing die -->
-            <rect class="die" x="185" y="181" width="70" height="70" rx="11" fill="url(#die)"/>
-            <rect x="185" y="181" width="70" height="70" rx="11" fill="none" stroke="#BFE6FF" stroke-width="1.5" opacity="0.85"/>
-            <path d="M205 216 H235 M220 201 V231" stroke="#EAF6FF" stroke-width="1.6" opacity="0.7" stroke-linecap="round"/>
-            <!-- orientation notch -->
-            <circle cx="156" cy="152" r="4" fill="#2E1EE0"/>
-          </g>
-
-          <!-- sparkles -->
-          <g fill="#8B7BFF">
-            <circle class="spark s1" cx="360" cy="150" r="3"/>
-            <circle class="spark s2" cx="80" cy="300" r="2.5"/>
-            <circle class="spark s3" cx="330" cy="330" r="2.5"/>
-            <circle class="spark s4" cx="120" cy="120" r="2.5"/>
-          </g>
-        </svg>
+      <div class="mockup-stage reveal" aria-hidden="true">
+        <div class="mockup-glow"></div>
+        <div class="mockup-window">
+          <div class="mockup-bar">
+            <span class="mdot r"></span><span class="mdot y"></span><span class="mdot g"></span>
+            <span class="mockup-url">app.semiconlabs.io/session</span>
+            <span class="mockup-live"><span class="liveDot"></span>LIVE SESSION</span>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-sidebar">
+              <div class="fitem active">▸ floorplan.def</div>
+              <div class="fitem">· top_module.v</div>
+              <div class="fitem">· timing.rpt</div>
+              <div class="fitem">· constraints.sdc</div>
+              <div class="fitem">· outputs/</div>
+            </div>
+            <div class="mockup-main">
+              <div class="mockup-canvas" id="chipCanvas"></div>
+            </div>
+          </div>
+          <div class="mockup-footer">
+            <span>Tool: <b>Synopsys VCS</b></span>
+            <span>Session remaining: <b id="sessionTimer">47:12</b></span>
+          </div>
+        </div>
 
         <div class="float-chip fc1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>No Install</div>
         <div class="float-chip fc2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg>Secure Session</div>
@@ -750,6 +695,31 @@
     document.getElementById('cd-s').textContent = pad(Math.floor(d%6e4/1e3));
     setTimeout(tick, 1000);
   })();
+
+  // Live session timer (counts down from 47:12)
+  let secs = 47*60 + 12;
+  const timerEl = document.getElementById('sessionTimer');
+  if(!reduce && timerEl) setInterval(()=>{ secs = secs>0 ? secs-1 : 47*60+12; timerEl.textContent = pad(Math.floor(secs/60))+':'+pad(secs%60); }, 1000);
+
+  // Chip floorplan visualization inside the mockup (brand blue palette)
+  const canvas = document.getElementById('chipCanvas');
+  if(canvas){
+    const w=480,h=200;
+    const blocks=[
+      {x:20,y:20,w:90,h:60,f:'rgba(46,30,224,.14)',s:'#2E1EE0'},
+      {x:130,y:20,w:60,h:140,f:'rgba(67,97,255,.13)',s:'#4361FF'},
+      {x:210,y:20,w:110,h:60,f:'rgba(46,30,224,.10)',s:'#5B4EF2'},
+      {x:210,y:100,w:110,h:60,f:'rgba(67,97,255,.11)',s:'#4361FF'},
+      {x:340,y:20,w:110,h:140,f:'rgba(46,30,224,.12)',s:'#2E1EE0'},
+      {x:20,y:100,w:90,h:60,f:'rgba(91,78,242,.11)',s:'#5B4EF2'}
+    ];
+    let svg=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none">`;
+    blocks.forEach(b=>{ svg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="${b.f}" stroke="${b.s}" stroke-width="1" rx="2"/>`; });
+    ["M110 50 H130","M190 90 V100","M320 50 H340","M320 130 H340","M65 80 V100"].forEach((d,i)=>{
+      svg+=`<path d="${d}" stroke="#2E1EE0" stroke-width="1" fill="none" opacity="0.5" stroke-dasharray="4 3">${reduce?'':`<animate attributeName="stroke-dashoffset" from="20" to="0" dur="${2+i*0.4}s" repeatCount="indefinite"/>`}</path>`;
+    });
+    svg+='</svg>'; canvas.innerHTML=svg;
+  }
 
   // Registration intent toggle
   const intents = document.querySelectorAll('.intent');
