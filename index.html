@@ -208,7 +208,8 @@
 
   /* Tools */
   .tool-row{display:flex; justify-content:center; gap:16px; flex-wrap:wrap;}
-  .tool-badge{font-family:var(--mono); font-size:15px; font-weight:600; padding:18px 34px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--sh-card); transition:all .25s; letter-spacing:.02em;}
+  .tool-badge{display:inline-flex; align-items:center; justify-content:center; min-width:170px; min-height:64px; font-family:var(--mono); font-size:15px; font-weight:600; padding:16px 30px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--sh-card); transition:all .25s; letter-spacing:.02em;}
+  .tool-logo{height:32px; width:auto; max-width:140px; object-fit:contain; display:block;}
   .tool-badge:hover{border-color:var(--blue); transform:translateY(-4px); box-shadow:var(--sh-hover);}
   .tool-note{text-align:center; color:var(--ink-dim); font-size:14.5px; max-width:560px; margin:30px auto 0;}
 
@@ -478,9 +479,18 @@
         <h2>Real tools. Not simulators.</h2>
       </div>
       <div class="tool-row reveal">
-        <span class="tool-badge">Cadence</span>
-        <span class="tool-badge">Synopsys</span>
-        <span class="tool-badge">Siemens</span>
+        <span class="tool-badge">
+          <img src="images/cadence.png" alt="Cadence" class="tool-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" />
+          <span class="tool-fallback" style="display:none">Cadence</span>
+        </span>
+        <span class="tool-badge">
+          <img src="images/synopsys.png" alt="Synopsys" class="tool-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" />
+          <span class="tool-fallback" style="display:none">Synopsys</span>
+        </span>
+        <span class="tool-badge">
+          <img src="images/siemens.png" alt="Siemens" class="tool-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" />
+          <span class="tool-fallback" style="display:none">Siemens</span>
+        </span>
       </div>
       <p class="tool-note reveal">Hourly, browser-based access to the same tools used inside production design houses — pay only for the hours you use.</p>
     </div>
