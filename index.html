@@ -185,6 +185,15 @@
   .badge{display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:var(--ink-dim); padding:9px 16px; border-radius:24px; border:1px solid var(--line); background:#fff;}
   .badge svg{width:15px; height:15px; color:var(--blue); flex-shrink:0;}
 
+  /* Flows marquee (main-website style: big faded scrolling words) */
+  .flows-strip{padding:34px 0; overflow:hidden;}
+  .flows-label{text-align:center; font-family:var(--display); font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-faint); margin-bottom:18px;}
+  .flows-viewport{overflow:hidden; mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);}
+  .flows-track{display:flex; gap:48px; width:max-content; animation:marquee 45s linear infinite;}
+  .flows-track:hover{animation-play-state:paused;}
+  .flows-track span{font-family:var(--display); font-size:clamp(20px,3vw,34px); font-weight:800; text-transform:uppercase; letter-spacing:-.01em; color:rgba(12,18,48,.13); white-space:nowrap; transition:color .2s; cursor:default;}
+  .flows-track span:hover{color:var(--blue);}
+
   /* Marquee */
   .marquee-strip{padding:16px 0; overflow:hidden; border-bottom:1px solid var(--line);}
   .marquee{display:flex; gap:36px; width:max-content; animation:marquee 32s linear infinite;
@@ -496,6 +505,14 @@
     </div>
   </section>
 
+  <!-- ============ FLOWS SCROLLING BAR ============ -->
+  <div class="flows-strip reveal">
+    <p class="flows-label">Everything inside your VLSI course</p>
+    <div class="flows-viewport">
+      <div class="flows-track" id="flowsTrack"></div>
+    </div>
+  </div>
+
   <!-- ============ WHO FOR ============ -->
   <section class="section" id="who">
     <div class="wrap">
@@ -709,6 +726,11 @@
     });
     svg+='</svg>'; canvas.innerHTML=svg;
   }
+
+  // Flows marquee — what's inside the course
+  const flowTerms = ['Projects','Test Cases','Modules','Domains','Skills','Competencies','Physical Design','Design Verification','RTL Design','Synthesis','Place & Route','Clock Tree Synthesis','Static Timing','Physical Verification','UVM','Functional Coverage','Assertions','Timing Closure','DRC / LVS','GDSII Tapeout'];
+  const flowsTrack = document.getElementById('flowsTrack');
+  if(flowsTrack) flowsTrack.innerHTML = [...flowTerms, ...flowTerms].map(t=>'<span>'+t+'</span>').join('');
 
   // Registration intent toggle
   const intents = document.querySelectorAll('.intent');
