@@ -89,6 +89,12 @@
   .hero h1{font-size:clamp(38px,5.2vw,62px); font-weight:900; margin:16px 0 16px; letter-spacing:-.03em;}
   .hero-sub{font-size:19px; color:var(--ink); font-weight:600; max-width:500px; margin-bottom:18px; line-height:1.45;}
   .hero-sub b{color:var(--blue);}
+  .hero-logos{margin:8px 0 26px;}
+  .hero-logos-row{display:flex; align-items:center; gap:30px; flex-wrap:wrap;}
+  .hero-logos-row img{height:30px; width:auto; max-width:132px; object-fit:contain; opacity:.92;}
+  .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin-top:16px;}
+  .hero-logos .lbl b{color:var(--blue);}
+  @media (max-width:560px){ .hero-logos-row{gap:20px;} .hero-logos-row img{height:24px; max-width:104px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
   .marker-hl::before{content:""; position:absolute; left:-.06em; right:-.06em; top:.5em; bottom:.04em; background:rgba(46,30,224,.15); border-radius:.16em; transform:rotate(-1.3deg); z-index:-1;}
   .trust-chips{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:24px;}
@@ -420,7 +426,14 @@
     <div class="wrap hero-grid">
       <div class="reveal">
         <h1>The world's first<br><span class="grad">cloud VLSI lab.</span></h1>
-        <p class="hero-sub">Run <b>Cadence</b>, <b>Synopsys</b> &amp; <b>Siemens EDA</b> in your browser — <b>by the hour</b>.</p>
+        <div class="hero-logos">
+          <div class="hero-logos-row">
+            <img src="images/logo-cadence.png" alt="Cadence" />
+            <img src="images/logo-synopsys.png" alt="Synopsys" />
+            <img src="images/logo-siemens.png" alt="Siemens" />
+          </div>
+          <p class="lbl">In your browser — <b>by the hour</b>. No installs, no license queue.</p>
+        </div>
 
         <div class="cta-row" id="register-cta">
           <div class="cta-option">
@@ -504,11 +517,6 @@
       <div class="section-head reveal">
         <div class="eyebrow center">What's coming</div>
         <h2>Real tools. Not simulators.</h2>
-      </div>
-      <div class="tool-logos reveal">
-        <img src="images/logo-cadence.png" alt="Cadence" />
-        <img src="images/logo-synopsys.png" alt="Synopsys" />
-        <img src="images/logo-siemens.png" alt="Siemens" />
       </div>
       <div class="flows-viewport reveal" style="margin-top:6px;">
         <div class="flows-track" id="flowsTrack"></div>
