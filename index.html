@@ -185,6 +185,12 @@
   .badge{display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:var(--ink-dim); padding:9px 16px; border-radius:24px; border:1px solid var(--line); background:#fff;}
   .badge svg{width:15px; height:15px; color:var(--blue); flex-shrink:0;}
 
+  /* Tool logos row */
+  .tool-logos{display:flex; align-items:center; justify-content:center; gap:clamp(26px,6vw,66px); flex-wrap:wrap; margin:14px 0 30px;}
+  .tool-logos img{height:34px; width:auto; max-width:150px; object-fit:contain; opacity:.9; transition:opacity .2s, transform .2s;}
+  .tool-logos img:hover{opacity:1; transform:translateY(-2px);}
+  @media (max-width:560px){ .tool-logos{gap:22px;} .tool-logos img{height:26px; max-width:110px;} }
+
   /* Flows marquee (main-website style: big faded scrolling words) */
   .flows-strip{padding:34px 0; overflow:hidden;}
   .flows-label{text-align:center; font-family:var(--display); font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-faint); margin-bottom:18px;}
@@ -397,7 +403,7 @@
       <a href="#who">Who It's For</a>
       <a href="#faq">FAQ</a>
     </div>
-    <div class="header-timer" aria-label="Founding offer countdown">
+    <div class="header-timer" aria-label="Launch offer countdown">
       <span class="ht-lbl">Offer closes in</span>
       <span class="ht-box"><b id="cd-d">20</b>d</span>
       <span class="ht-box"><b id="cd-h">00</b>h</span>
@@ -424,7 +430,7 @@
             <a href="#register" class="btn btn-outline" data-intent="notify">Notify Me</a>
           </div>
           <div class="cta-option primary">
-            <span class="best">Founders' Deal</span>
+            <span class="best">Limited Deal</span>
             <svg class="cta-icon" viewBox="0 0 38 38" fill="none"><path d="M19 4 8 10v9c0 8 5 13 11 15 6-2 11-7 11-15v-9L19 4Z" stroke="currentColor" stroke-width="1.5"/><path d="M13.5 19l4 4 8-8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h3>Register for ₹99</h3>
             <p>Lock the Launch Offer: buy 100 hrs, get 100 free &amp; more</p>
@@ -437,7 +443,7 @@
         </div>
 
         <div class="spots" style="margin-top:22px;">
-          <div class="spots-row"><span>Founding registrations</span><span><b id="spotsCount">0</b> / 1,000 claimed</span></div>
+          <div class="spots-row"><span>Launch registrations</span><span><b id="spotsCount">0</b> / 1,000 claimed</span></div>
           <div class="spots-track"><div class="spots-fill" id="spotsFill"></div></div>
         </div>
       </div>
@@ -499,6 +505,11 @@
         <div class="eyebrow center">What's coming</div>
         <h2>Real tools. Not simulators.</h2>
       </div>
+      <div class="tool-logos reveal">
+        <img src="images/logo-cadence.png" alt="Cadence" />
+        <img src="images/logo-synopsys.png" alt="Synopsys" />
+        <img src="images/logo-siemens.png" alt="Siemens" />
+      </div>
       <div class="flows-viewport reveal" style="margin-top:6px;">
         <div class="flows-track" id="flowsTrack"></div>
       </div>
@@ -543,7 +554,7 @@
       <div class="steps reveal">
         <div class="step"><span class="n">01 / RESERVE</span><h3>Register for ₹99</h3><p>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</p></div>
         <div class="step"><span class="n">02 / LAUNCH</span><h3>We open the doors</h3><p>You're notified first, ahead of the public. Your offer is already locked in.</p></div>
-        <div class="step"><span class="n">03 / TOP UP</span><h3>Buy 100 hours, get 100 free</h3><p>Add hours whenever you need them — and your founding bonus doubles them.</p></div>
+        <div class="step"><span class="n">03 / TOP UP</span><h3>Buy 100 hours, get 100 free</h3><p>Add hours whenever you need them — and your launch bonus doubles them.</p></div>
         <div class="step"><span class="n">04 / BUILD</span><h3>Run tools in your browser</h3><p>Open Cadence, Synopsys or Siemens EDA in a live cloud session — no install.</p></div>
       </div>
     </div>
@@ -553,7 +564,7 @@
   <section class="section alt" id="offer">
     <div class="wrap">
       <div class="offer-card reveal">
-        <span class="offer-ribbon">🔥 Founding Launch Offer · Only 1,000 seats</span>
+        <span class="offer-ribbon">🔥 Limited Launch Offer · Only 1,000 seats</span>
         <div class="offer-head">
           <div class="eyebrow center">The Launch Offer</div>
           <h2>Everything you need to<br>break into VLSI.</h2>
@@ -582,11 +593,11 @@
   <section class="section alt" id="register">
     <div class="wrap reg-grid">
       <div class="reg-info reveal">
-        <div class="eyebrow">Reserve your founding spot</div>
+        <div class="eyebrow">Reserve your spot</div>
         <h2>Two ways in. <span class="grad">Both take 30 seconds.</span></h2>
         <p>Lock the ₹99 Launch Offer, or just leave your email and we'll notify you the moment we open.</p>
         <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span><div><b>Your ₹99 is a reservation</b><span>Nothing else is charged until you choose to buy hours.</span></div></div>
-        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Founding pricing, locked</b><span>Buy 100 hours, get 100 free — only for founding registrants.</span></div></div>
+        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Launch pricing, locked</b><span>Buy 100 hours, get 100 free — only for early registrants.</span></div></div>
         <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></span><div><b>Only 1,000 spots</b><span>The Launch Offer disappears once we open to the public.</span></div></div>
         <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>See it before you commit</b><span>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</span></div></div>
       </div>
@@ -607,7 +618,7 @@
         <div class="success" id="success">
           <div class="big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <h3 style="margin-top:20px; font-size:22px;">You're in!</h3>
-          <p style="color:var(--ink-dim); max-width:340px; margin-top:8px;" id="successMsg">Your founding spot is reserved. We'll email you the moment the Launch Offer goes live.</p>
+          <p style="color:var(--ink-dim); max-width:340px; margin-top:8px;" id="successMsg">Your spot is reserved. We'll email you the moment the Launch Offer goes live.</p>
           <button class="btn btn-outline" style="margin-top:22px;" onclick="document.getElementById('success').classList.remove('show');document.getElementById('regForm').style.display='block';document.getElementById('regForm').reset();">Register another</button>
         </div>
       </div>
@@ -624,11 +635,11 @@
       <div class="faq-wrap reveal">
         <div class="faq-item">
           <button class="faq-q" type="button">What exactly is Semicon Labs? <span class="pl">+</span></button>
-          <div class="faq-a"><p>Semicon Labs is the world's first cloud-based VLSI lab — hourly, browser-based access to industry-standard EDA tools (Cadence, Synopsys &amp; Siemens EDA). No installs, no license queues, no lab seat to fight for. We're launching soon and opening founding registrations now.</p></div>
+          <div class="faq-a"><p>Semicon Labs is the world's first cloud-based VLSI lab — hourly, browser-based access to industry-standard EDA tools (Cadence, Synopsys &amp; Siemens EDA). No installs, no license queues, no lab seat to fight for. We're launching soon and opening registrations now.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">What does my ₹99 actually get me? <span class="pl">+</span></button>
-          <div class="faq-a"><p>Your ₹99 reserves your founding spot and locks the Launch Offer: <b>Buy 100 hours, get 100 hours free</b> once we launch, plus access to our 200+ recruiter placement community (after completing the required skills), lifetime access to the premium VLSI learning library, and free AI-powered learning. Nothing else is charged until you choose to buy hours.</p></div>
+          <div class="faq-a"><p>Your ₹99 reserves your spot and locks the Launch Offer: <b>Buy 100 hours, get 100 hours free</b> once we launch, plus access to our 200+ recruiter placement community (after completing the required skills), lifetime access to the premium VLSI learning library, and free AI-powered learning. Nothing else is charged until you choose to buy hours.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">Which tools will I get access to? <span class="pl">+</span></button>
@@ -640,11 +651,11 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">How does "pay per hour" work? <span class="pl">+</span></button>
-          <div class="faq-a"><p>Instead of expensive annual licenses, you buy hours and use only what you need. Founding registrants get the launch bonus — buy 100 hours and we double them to 200. Your hours don't vanish; use them across projects at your own pace.</p></div>
+          <div class="faq-a"><p>Instead of expensive annual licenses, you buy hours and use only what you need. Early registrants get the launch bonus — buy 100 hours and we double them to 200. Your hours don't vanish; use them across projects at your own pace.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">When do you launch, and what happens after I register? <span class="pl">+</span></button>
-          <div class="faq-a"><p>We're opening soon. Founding registrants are notified first — ahead of the public — with the Launch Offer already locked to their account. If you chose "just notify me," you'll simply get the launch email with no payment required.</p></div>
+          <div class="faq-a"><p>We're opening soon. Early registrants are notified first — ahead of the public — with the Launch Offer already locked to their account. If you chose "just notify me," you'll simply get the launch email with no payment required.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" type="button">Who is Semicon Labs for? <span class="pl">+</span></button>
@@ -771,9 +782,9 @@
     setErr('phone', phone.length<10); if(phone.length<10) ok=false;
     if(!ok) return;
     // Hook to your backend / Easebuzz ₹99 order here.
-    console.log('Founding registration:', Object.fromEntries(new FormData(form)));
+    console.log('Launch registration:', Object.fromEntries(new FormData(form)));
     document.getElementById('successMsg').textContent = intentInput.value==='pay'
-      ? "Your founding spot is reserved. We'll take you to the ₹99 payment the moment it opens — your Launch Offer is locked."
+      ? "Your spot is reserved. We'll take you to the ₹99 payment the moment it opens — your Launch Offer is locked."
       : "You're on the list. We'll email you the moment we launch, ahead of the public.";
     form.style.display='none';
     document.getElementById('success').classList.add('show');
