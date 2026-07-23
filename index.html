@@ -92,9 +92,10 @@
   .hero-logos{margin:8px 0 26px;}
   .hero-logos-row{display:flex; align-items:center; gap:30px; flex-wrap:wrap;}
   .hero-logos-row img{height:30px; width:auto; max-width:132px; object-fit:contain; opacity:.92;}
+  .hero-logos-row .lg-siemens{height:40px;}
   .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin-top:16px;}
   .hero-logos .lbl b{color:var(--blue);}
-  @media (max-width:560px){ .hero-logos-row{gap:20px;} .hero-logos-row img{height:24px; max-width:104px;} .hero-logos .lbl{font-size:14px;} }
+  @media (max-width:560px){ .hero-logos-row{gap:20px;} .hero-logos-row img{height:24px; max-width:104px;} .hero-logos-row .lg-siemens{height:32px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
   .marker-hl::before{content:""; position:absolute; left:-.06em; right:-.06em; top:.5em; bottom:.04em; background:rgba(46,30,224,.15); border-radius:.16em; transform:rotate(-1.3deg); z-index:-1;}
   .trust-chips{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:24px;}
@@ -430,7 +431,7 @@
           <div class="hero-logos-row">
             <img src="images/logo-cadence.png" alt="Cadence" />
             <img src="images/logo-synopsys.png" alt="Synopsys" />
-            <img src="images/logo-siemens.png" alt="Siemens" />
+            <img src="images/logo-siemens.png" alt="Siemens" class="lg-siemens" />
           </div>
           <p class="lbl">In your browser — <b>by the hour</b>. No installs, no license queue.</p>
         </div>
