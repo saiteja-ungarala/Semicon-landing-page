@@ -91,11 +91,11 @@
   .hero-sub b{color:var(--blue);}
   .hero-logos{margin:8px 0 26px;}
   .hero-logos-row{display:flex; align-items:center; gap:34px; flex-wrap:wrap;}
-  /* Equalise optical size: normalise every logo to the same cap-height box */
-  .hero-logos-row img{height:30px; width:auto; max-height:30px; max-width:128px; object-fit:contain; opacity:.9;}
+  /* All logos now trimmed to their glyphs, so equal height = equal letter size */
+  .hero-logos-row img{height:28px; width:auto; max-height:28px; max-width:180px; object-fit:contain; opacity:.9;}
   .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin-top:16px;}
   .hero-logos .lbl b{color:var(--blue);}
-  @media (max-width:560px){ .hero-logos-row{gap:24px;} .hero-logos-row img{height:24px; max-height:24px; max-width:100px;} .hero-logos .lbl{font-size:14px;} }
+  @media (max-width:560px){ .hero-logos-row{gap:22px; justify-content:center;} .hero-logos-row img{height:22px; max-height:22px; max-width:140px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
   .marker-hl::before{content:""; position:absolute; left:-.06em; right:-.06em; top:.5em; bottom:.04em; background:rgba(46,30,224,.15); border-radius:.16em; transform:rotate(-1.3deg); z-index:-1;}
   .trust-chips{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:24px;}
@@ -257,19 +257,28 @@
   .offer-body{padding:4px 34px 36px;}
   /* Loud, separate launch-deal comparison */
   .offer-deal{display:flex; align-items:stretch; margin:0 0 14px; border:1.6px solid var(--blue); border-radius:16px; overflow:hidden;}
-  .offer-deal .deal-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:16px 12px; text-align:center;}
+  .offer-deal .deal-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:18px 14px; text-align:center;}
   .offer-deal .deal-now{background:var(--blue); color:#fff;}
   .offer-deal .deal-later{background:var(--blue-soft); color:var(--ink);}
   .offer-deal .deal-tag{font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;}
   .offer-deal .deal-now .deal-tag{color:rgba(255,255,255,.85);}
   .offer-deal .deal-later .deal-tag{color:var(--ink-dim);}
-  .offer-deal .deal-hours{font-size:17px; font-weight:800; line-height:1.15; margin-top:4px;}
+  .offer-deal .deal-hours{font-size:17px; font-weight:800; line-height:1.15; margin-top:5px;}
+  .offer-deal .deal-later .deal-hours{color:var(--ink);}
   .offer-deal .deal-sub{font-size:11px;}
   .offer-deal .deal-now .deal-sub{color:rgba(255,255,255,.82);}
   .offer-deal .deal-later .deal-sub{color:var(--ink-dim);}
-  .offer-deal .deal-price{font-family:var(--mono); font-size:22px; font-weight:800; margin-top:6px; line-height:1;}
-  .offer-deal .deal-later .deal-price{color:var(--ink-faint); text-decoration:line-through;}
-  .offer-deal .deal-vs{align-self:center; flex-shrink:0; width:30px; height:30px; margin:0 -15px; z-index:2; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; font-weight:800; color:var(--blue); background:#fff; border:1.6px solid var(--blue); border-radius:50%;}
+  /* Left: anchor price struck, launch price big */
+  .offer-deal .deal-was{font-family:var(--mono); font-size:14px; font-weight:700; text-decoration:line-through; margin-top:9px; color:rgba(255,255,255,.72);}
+  .offer-deal .deal-price{font-family:var(--mono); font-size:28px; font-weight:800; margin-top:1px; line-height:1; color:#fff;}
+  .offer-deal .deal-save{margin-top:7px; font-family:var(--mono); font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--blue); background:#fff; padding:3px 9px; border-radius:999px;}
+  /* Right: plain pay-per-use rate table, no strike */
+  .offer-deal .deal-rates{list-style:none; margin:10px 0 0; padding:0; width:100%; max-width:210px; display:flex; flex-direction:column; gap:0;}
+  .offer-deal .deal-rates li{display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; padding:7px 0; border-top:1px solid rgba(46,30,224,.16);}
+  .offer-deal .deal-rates li:first-child{border-top:0;}
+  .offer-deal .deal-rates li span{color:var(--ink-dim);}
+  .offer-deal .deal-rates li b{font-family:var(--mono); font-weight:800; color:var(--ink); font-size:14px;}
+  .offer-deal .deal-vs{align-self:center; flex-shrink:0; width:32px; height:32px; margin:0 -16px; z-index:2; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; font-weight:800; color:var(--blue); background:#fff; border:1.6px solid var(--blue); border-radius:50%;}
   .offer-deal-note{font-size:12.5px; line-height:1.55; color:var(--ink-dim); margin:0 0 22px; text-align:center;}
   .offer-deal-note b{color:var(--blue-600);}
   .offer-feats{display:grid; gap:10px; text-align:left; margin:0 0 26px;}
@@ -612,14 +621,18 @@
               <span class="deal-tag">Pre-book · ₹99</span>
               <span class="deal-hours">200 lab hours</span>
               <span class="deal-sub">100 hrs + 100 free</span>
+              <span class="deal-was">₹18,000</span>
               <span class="deal-price">₹9,000</span>
+              <span class="deal-save">You save ₹9,000</span>
             </div>
             <span class="deal-vs">vs</span>
             <div class="deal-col deal-later">
               <span class="deal-tag">After launch</span>
-              <span class="deal-hours">200 lab hours</span>
-              <span class="deal-sub">₹9,000 per 100 hrs</span>
-              <span class="deal-price">₹18,000</span>
+              <span class="deal-hours">Pay-per-use rate</span>
+              <ul class="deal-rates">
+                <li><span>100 hours</span><b>₹9,000</b></li>
+                <li><span>200 hours</span><b>₹18,000</b></li>
+              </ul>
             </div>
           </div>
           <p class="offer-deal-note">Reserve today and lock the launch rate — <b>200 hours for the price of 100</b>. Once the 1,000 seats are gone, 100 hours cost ₹9,000 and 200 hours cost ₹18,000.</p>
