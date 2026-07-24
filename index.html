@@ -90,12 +90,12 @@
   .hero-sub{font-size:19px; color:var(--ink); font-weight:600; max-width:500px; margin-bottom:18px; line-height:1.45;}
   .hero-sub b{color:var(--blue);}
   .hero-logos{margin:8px 0 26px;}
-  .hero-logos-row{display:flex; align-items:center; gap:30px; flex-wrap:wrap;}
-  .hero-logos-row img{height:30px; width:auto; max-width:132px; object-fit:contain; opacity:.92;}
-  .hero-logos-row .lg-siemens{height:40px;}
+  .hero-logos-row{display:flex; align-items:center; gap:34px; flex-wrap:wrap;}
+  /* Equalise optical size: normalise every logo to the same cap-height box */
+  .hero-logos-row img{height:30px; width:auto; max-height:30px; max-width:128px; object-fit:contain; opacity:.9;}
   .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin-top:16px;}
   .hero-logos .lbl b{color:var(--blue);}
-  @media (max-width:560px){ .hero-logos-row{gap:20px;} .hero-logos-row img{height:24px; max-width:104px;} .hero-logos-row .lg-siemens{height:32px;} .hero-logos .lbl{font-size:14px;} }
+  @media (max-width:560px){ .hero-logos-row{gap:24px;} .hero-logos-row img{height:24px; max-height:24px; max-width:100px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
   .marker-hl::before{content:""; position:absolute; left:-.06em; right:-.06em; top:.5em; bottom:.04em; background:rgba(46,30,224,.15); border-radius:.16em; transform:rotate(-1.3deg); z-index:-1;}
   .trust-chips{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:24px;}
@@ -255,7 +255,23 @@
   .offer-strike{font-family:var(--mono); font-size:14px; color:var(--ink-faint); text-decoration:line-through;}
   .offer-once{font-family:var(--mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--blue);}
   .offer-body{padding:4px 34px 36px;}
-  .offer-gift{font-size:16px; font-weight:800; color:var(--blue-600); margin:0 0 22px; padding:15px 20px; border:1.5px dashed rgba(46,30,224,.45); border-radius:14px; background:var(--blue-soft);}
+  /* Loud, separate launch-deal comparison */
+  .offer-deal{display:flex; align-items:stretch; margin:0 0 14px; border:1.6px solid var(--blue); border-radius:16px; overflow:hidden;}
+  .offer-deal .deal-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:16px 12px; text-align:center;}
+  .offer-deal .deal-now{background:var(--blue); color:#fff;}
+  .offer-deal .deal-later{background:var(--blue-soft); color:var(--ink);}
+  .offer-deal .deal-tag{font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;}
+  .offer-deal .deal-now .deal-tag{color:rgba(255,255,255,.85);}
+  .offer-deal .deal-later .deal-tag{color:var(--ink-dim);}
+  .offer-deal .deal-hours{font-size:17px; font-weight:800; line-height:1.15; margin-top:4px;}
+  .offer-deal .deal-sub{font-size:11px;}
+  .offer-deal .deal-now .deal-sub{color:rgba(255,255,255,.82);}
+  .offer-deal .deal-later .deal-sub{color:var(--ink-dim);}
+  .offer-deal .deal-price{font-family:var(--mono); font-size:22px; font-weight:800; margin-top:6px; line-height:1;}
+  .offer-deal .deal-later .deal-price{color:var(--ink-faint); text-decoration:line-through;}
+  .offer-deal .deal-vs{align-self:center; flex-shrink:0; width:30px; height:30px; margin:0 -15px; z-index:2; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; font-weight:800; color:var(--blue); background:#fff; border:1.6px solid var(--blue); border-radius:50%;}
+  .offer-deal-note{font-size:12.5px; line-height:1.55; color:var(--ink-dim); margin:0 0 22px; text-align:center;}
+  .offer-deal-note b{color:var(--blue-600);}
   .offer-feats{display:grid; gap:10px; text-align:left; margin:0 0 26px;}
   .offer-feats li{display:flex; align-items:center; gap:11px; padding:14px 16px; font-size:14px; line-height:1.45; color:var(--ink); background:var(--blue-soft); border:1px solid rgba(46,30,224,.18); border-radius:14px;}
   .offer-feats li .ic{display:grid; place-items:center; width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; font-size:12px; font-weight:800; flex-shrink:0;}
@@ -366,10 +382,16 @@
     .cd-box{flex:1; min-width:0; padding:12px 3px;}
     .cd-num{font-size:22px;}
     .offer-price{font-size:44px;}
-    .offer-gift{font-size:15.5px; padding:13px 14px;}
     .offer-head,.offer-body{padding-left:22px; padding-right:22px;}
-    .offer-feats li{flex-wrap:wrap;}
-    .offer-feats li .val{margin-left:33px; margin-top:2px;}
+    /* Stack the deal comparison; keep the "vs" badge centered between the two */
+    .offer-deal{flex-direction:column;}
+    .offer-deal .deal-col{padding:14px 12px;}
+    .offer-deal .deal-vs{margin:-15px auto; align-self:center;}
+    /* Consistent point alignment: icon top-left, text right, pill under text */
+    .offer-feats li{display:grid; grid-template-columns:22px 1fr; column-gap:11px; row-gap:8px; align-items:start; padding:14px 15px;}
+    .offer-feats li .ic{grid-row:1; grid-column:1; margin-top:1px;}
+    .offer-feats li .txt{grid-row:1; grid-column:2;}
+    .offer-feats li .val{grid-row:2; grid-column:2; justify-self:start; margin:0;}
     .trust-grid{gap:16px 10px;}
     .trust-num{font-size:23px;}
     .trust-label{font-size:10.5px;}
@@ -431,7 +453,7 @@
           <div class="hero-logos-row">
             <img src="images/logo-cadence.png" alt="Cadence" />
             <img src="images/logo-synopsys.png" alt="Synopsys" />
-            <img src="images/logo-siemens.png" alt="Siemens" class="lg-siemens" />
+            <img src="images/logo-siemens.png" alt="Siemens" />
           </div>
           <p class="lbl">In your browser — <b>by the hour</b>. No installs, no license queue.</p>
         </div>
@@ -585,8 +607,24 @@
           </div>
         </div>
         <div class="offer-body">
-          <div class="offer-gift">🎁 Buy 100 hours, get 100 FREE — and more, once we launch</div>
+          <div class="offer-deal" aria-label="Launch offer pricing">
+            <div class="deal-col deal-now">
+              <span class="deal-tag">Pre-book · ₹99</span>
+              <span class="deal-hours">200 lab hours</span>
+              <span class="deal-sub">100 hrs + 100 free</span>
+              <span class="deal-price">₹9,000</span>
+            </div>
+            <span class="deal-vs">vs</span>
+            <div class="deal-col deal-later">
+              <span class="deal-tag">After launch</span>
+              <span class="deal-hours">200 lab hours</span>
+              <span class="deal-sub">₹9,000 per 100 hrs</span>
+              <span class="deal-price">₹18,000</span>
+            </div>
+          </div>
+          <p class="offer-deal-note">Reserve today and lock the launch rate — <b>200 hours for the price of 100</b>. Once the 1,000 seats are gone, 100 hours cost ₹9,000 and 200 hours cost ₹18,000.</p>
           <ul class="offer-feats">
+            <li><span class="ic">✓</span><span class="txt">Pre-book <b>₹99</b> unlocks <b>100 + 100 hours free</b> — 200 lab hours for just ₹9,000</span><span class="val">save ₹9,000</span></li>
             <li><span class="ic">✓</span><span class="txt">Access to our <b>Recruiter Placement Community</b>, after completing the required skills</span><span class="val">200+ network</span></li>
             <li><span class="ic">✓</span><span class="txt">Lifetime access to our premium <b>VLSI learning library</b></span><span class="val">worth ₹1,00,000</span></li>
             <li><span class="ic">✓</span><span class="txt">Unlock <b>AI-powered learning</b>, on us</span><span class="val">Free</span></li>
