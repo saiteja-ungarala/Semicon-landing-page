@@ -325,6 +325,10 @@
   .success{display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:400px;}
   .success.show{display:flex;}
   .success .big{width:64px; height:64px; border-radius:50%; background:var(--blue); color:#fff; display:grid; place-items:center; box-shadow:var(--sh-glow);}
+  .success .big.warn{background:linear-gradient(135deg,#F59E0B,#F97316); box-shadow:0 12px 30px -10px rgba(245,158,11,.6);}
+  .success .big.info{background:linear-gradient(135deg,var(--sky),var(--blue));}
+  .status-actions{display:flex; flex-direction:column; gap:10px; margin-top:26px; width:100%; max-width:300px;}
+  .status-actions .btn{width:100%;}
 
   /* Final CTA */
   .final-cta{text-align:center; padding:68px 0; position:relative; overflow:hidden; border-top:1px solid var(--line);
@@ -676,10 +680,10 @@
           <p class="form-note">By registering you agree to receive launch updates. No spam — unsubscribe anytime.</p>
         </form>
         <div class="success" id="success">
-          <div class="big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3 style="margin-top:20px; font-size:22px;">You're in!</h3>
-          <p style="color:var(--ink-dim); max-width:340px; margin-top:8px;" id="successMsg">Your spot is reserved. We'll email you the moment the Launch Offer goes live.</p>
-          <button class="btn btn-outline" style="margin-top:22px;" onclick="document.getElementById('success').classList.remove('show');document.getElementById('regForm').style.display='block';document.getElementById('regForm').reset();">Register another</button>
+          <div class="big" id="statusIcon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 style="margin-top:20px; font-size:22px;" id="statusTitle">You're in!</h3>
+          <p style="color:var(--ink-dim); max-width:360px; margin-top:10px; line-height:1.55;" id="statusMsg">Your spot is reserved.</p>
+          <div class="status-actions" id="statusActions"></div>
         </div>
       </div>
     </div>
@@ -828,9 +832,95 @@
     ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
   }));
 
-  // Form validation + success
+  /* ============================================================
+     REGISTRATION + ₹99 PAYMENT FLOW
+     ------------------------------------------------------------
+     >>> SET THESE TWO VALUES <<<
+     1. EASEBUZZ_PAYMENT_LINK — your hosted Easebuzz ₹99 payment link.
+        In the Easebuzz dashboard, set the link's redirect URLs to:
+          Success  ->  https://saiteja-ungarala.github.io/Semicon-landing-page/?pay=success
+          Failure  ->  https://saiteja-ungarala.github.io/Semicon-landing-page/?pay=failed
+        Leave blank to keep "pay" as save-details-only (no fake success).
+     2. LEAD_ENDPOINT — optional POST URL (Formspree / Google Sheet / your API)
+        where name/email/phone are saved. Leave blank to only log to console.
+     ============================================================ */
+  const EASEBUZZ_PAYMENT_LINK = '';
+  const LEAD_ENDPOINT = '';
+
+  // Status-screen icons
+  const ICON = {
+    check: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    warn:  '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v6"/><path d="M12 17h.01"/></svg>',
+    bell:  '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>'
+  };
+
+  // The three (+ one fallback) outcome screens
+  const STATUS = {
+    success: { cls:'', icon:ICON.check, title:'Registration Successful! 🎉',
+      msg:"Your ₹99 Pre-Launch Registration has been successfully confirmed. You'll receive exclusive launch benefits, early access, and further updates through your registered email and mobile number. Thank you for registering!",
+      actions:[{label:'Done', kind:'outline', act:'reset'}] },
+    failed: { cls:'warn', icon:ICON.warn, title:'Payment Not Completed',
+      msg:"It looks like your ₹99 Pre-Launch Registration wasn't completed. Please complete your payment to secure your launch offer and exclusive pre-launch benefits.",
+      actions:[{label:'Retry Payment', kind:'primary', act:'retry'},{label:'Register another', kind:'outline', act:'reset'}] },
+    subscribed: { cls:'info', icon:ICON.bell, title:"You're Subscribed for Updates!",
+      msg:"Thank you for your interest. You'll receive the latest product updates, launch announcements, and exclusive news on your registered email and mobile number. Stay tuned for our official launch!",
+      actions:[{label:'Register another', kind:'outline', act:'reset'}] },
+    pending: { cls:'info', icon:ICON.check, title:'Details saved!',
+      msg:"We've saved your details and reserved your interest. We'll email you the ₹99 payment link to lock the Launch Offer shortly.",
+      actions:[{label:'Register another', kind:'outline', act:'reset'}] }
+  };
+
   const form = document.getElementById('regForm');
+  const successBox = document.getElementById('success');
   const setErr = (id,on)=>document.getElementById(id).closest('.field').classList.toggle('err', on);
+
+  function resetForm(){
+    successBox.classList.remove('show');
+    form.style.display='block';
+    form.reset();
+    setIntent('pay');
+  }
+
+  function showStatus(key){
+    const s = STATUS[key]; if(!s) return;
+    const icon = document.getElementById('statusIcon');
+    icon.className = 'big' + (s.cls ? ' '+s.cls : '');
+    icon.innerHTML = s.icon;
+    document.getElementById('statusTitle').textContent = s.title;
+    document.getElementById('statusMsg').textContent = s.msg;
+    const wrap = document.getElementById('statusActions');
+    wrap.innerHTML = '';
+    s.actions.forEach(a=>{
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'btn ' + (a.kind==='primary' ? 'btn-primary' : 'btn-outline');
+      b.innerHTML = a.label + (a.kind==='primary' ? ' <span class="btn-arrow">→</span>' : '');
+      b.addEventListener('click', ()=> a.act==='retry' ? startPayment() : resetForm());
+      wrap.appendChild(b);
+    });
+    form.style.display='none';
+    successBox.classList.add('show');
+    document.getElementById('register').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function captureLead(lead){
+    console.log('Launch registration:', lead);
+    if(LEAD_ENDPOINT){
+      fetch(LEAD_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(lead)}).catch(()=>{});
+    }
+  }
+
+  function startPayment(lead){
+    lead = lead || JSON.parse(localStorage.getItem('semiconLead') || 'null');
+    if(!EASEBUZZ_PAYMENT_LINK){ showStatus('pending'); return; }
+    let url = EASEBUZZ_PAYMENT_LINK;
+    if(lead){
+      const q = new URLSearchParams({name:lead.name||'', email:lead.email||'', phone:lead.phone||''});
+      url += (url.indexOf('?')>-1 ? '&' : '?') + q.toString();
+    }
+    window.location.href = url;
+  }
+
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
     const name=document.getElementById('name').value.trim();
@@ -841,14 +931,30 @@
     const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); setErr('email', !emailOk); if(!emailOk) ok=false;
     setErr('phone', phone.length<10); if(phone.length<10) ok=false;
     if(!ok) return;
-    // Hook to your backend / Easebuzz ₹99 order here.
-    console.log('Launch registration:', Object.fromEntries(new FormData(form)));
-    document.getElementById('successMsg').textContent = intentInput.value==='pay'
-      ? "Your spot is reserved. We'll take you to the ₹99 payment the moment it opens — your Launch Offer is locked."
-      : "You're on the list. We'll email you the moment we launch, ahead of the public.";
-    form.style.display='none';
-    document.getElementById('success').classList.add('show');
+
+    const lead = { name, email, phone, intent:intentInput.value, ts:Date.now() };
+    captureLead(lead);
+    localStorage.setItem('semiconLead', JSON.stringify(lead));
+
+    if(intentInput.value==='pay'){
+      startPayment(lead);          // -> Easebuzz; returns as ?pay=success / ?pay=failed
+    } else {
+      showStatus('subscribed');    // notify-only, no payment
+    }
   });
+
+  // On return from Easebuzz, show the right outcome based on the redirect param
+  (function handlePaymentReturn(){
+    const p = new URLSearchParams(location.search);
+    const raw = (p.get('pay') || p.get('status') || p.get('payment') || '').toLowerCase();
+    if(!raw) return;
+    const paid   = ['success','completed','captured','paid','1','true'].indexOf(raw) > -1;
+    const notYet = ['failed','failure','cancel','cancelled','usercancelled','pending','declined','0','false'].indexOf(raw) > -1;
+    if(paid) showStatus('success');
+    else if(notYet) showStatus('failed');
+    // Clean the query so a refresh doesn't repeat the popup
+    history.replaceState(null, '', location.pathname + location.hash);
+  })();
 </script>
 </body>
 </html>
