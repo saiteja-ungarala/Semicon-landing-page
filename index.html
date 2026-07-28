@@ -832,20 +832,33 @@
     ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
   }));
 
-  /* ============================================================
+  /* ================================================================
      REGISTRATION + ₹99 PAYMENT FLOW
-     ------------------------------------------------------------
-     >>> SET THESE TWO VALUES <<<
-     1. EASEBUZZ_PAYMENT_LINK — your hosted Easebuzz ₹99 payment link.
-        In the Easebuzz dashboard, set the link's redirect URLs to:
-          Success  ->  https://saiteja-ungarala.github.io/Semicon-landing-page/?pay=success
-          Failure  ->  https://saiteja-ungarala.github.io/Semicon-landing-page/?pay=failed
-        Leave blank to keep "pay" as save-details-only (no fake success).
-     2. LEAD_ENDPOINT — optional POST URL (Formspree / Google Sheet / your API)
-        where name/email/phone are saved. Leave blank to only log to console.
-     ============================================================ */
-  const EASEBUZZ_PAYMENT_LINK = '';
-  const LEAD_ENDPOINT = '';
+     ----------------------------------------------------------------
+     >>> INTEGRATION POINTS FOR THE PAYMENT / HOSTING TEAM <<<
+
+     This page is fully static and already handles every UI outcome
+     (success / payment-incomplete / updates-only). You only need to
+     connect the actual ₹99 charge. Pick ONE:
+
+     OPTION A — Hosted payment link (no code change needed):
+       1. Put your ₹99 Easebuzz payment link in EASEBUZZ_PAYMENT_LINK.
+       2. In Easebuzz, set that link's redirect URLs back to THIS page:
+            Success ->  https://<your-domain>/?pay=success
+            Failure ->  https://<your-domain>/?pay=failed
+          On return the page reads ?pay= and shows the right screen.
+          (?status= and ?payment= are also accepted, common values too.)
+
+     OPTION B — Your own checkout / SDK / backend:
+       Replace the body of startPayment() below with your flow, and call
+       showStatus('success') or showStatus('failed') when it resolves.
+
+     LEAD_ENDPOINT (optional): a POST URL to store name/email/phone.
+       Left blank on purpose — leads currently log to the console only.
+     See HANDOFF.md in this folder for the full walkthrough.
+     ================================================================ */
+  const EASEBUZZ_PAYMENT_LINK = '';   // <-- Option A: paste ₹99 Easebuzz link here
+  const LEAD_ENDPOINT = '';           // <-- optional: POST URL for lead storage
 
   // Status-screen icons
   const ICON = {
