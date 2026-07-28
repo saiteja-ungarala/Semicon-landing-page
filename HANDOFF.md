@@ -76,5 +76,43 @@ a POST URL (your API, Formspree, Google Apps Script, …). Payload is JSON:
 - [ ] Serve `index.html` + `images/` on the chosen host / domain.
 - [ ] Set `EASEBUZZ_PAYMENT_LINK` (Option A) **or** implement `startPayment` (Option B).
 - [ ] If Option A: configure Easebuzz success/failure redirect URLs (step 3).
-- [ ] Run one real ₹99 test transaction and confirm the correct screen shows.
+- [ ] **Verify every payment server-side before granting benefits** (see §6).
+- [ ] Test: complete a real ₹99 payment → "Registration Successful".
+- [ ] Test: start payment, cancel/return without paying → "Payment Not Completed" + Retry (NOT success).
+- [ ] Test: retry after a failed/abandoned attempt with the same email → allowed (NOT "already enrolled").
 - [ ] (Optional) Set `LEAD_ENDPOINT` to start storing registrations.
+
+---
+
+## 6. Correct behaviour & common mistakes (READ THIS FIRST)
+
+Two real bugs were seen in a previous integration. Both are on this list — do not repeat them.
+
+**Never show success or mark a user "enrolled" until the ₹99 payment is confirmed.**
+- `showStatus('success')` renders a *screen only* — it is not proof of payment. Fire it strictly after Easebuzz confirms the charge was captured.
+- `?pay=success` in the URL is client-controllable: anyone can type, refresh, bookmark, or share `/?pay=success`. Treat the `?pay=` param as a display **hint**, never as authoritative for money or enrollment. (The template already blocks the trivial case — it only honours `?pay=success` when a payment actually began in the same tab, via `sessionStorage 'semiconPayStarted'` — but that is **not** a substitute for server verification.)
+- Verify every payment server-side (Easebuzz webhook or verify/status API, keyed on the transaction/order id) before recording anyone as paid.
+- **Bug this prevents:** a user who returned without paying (back button / refresh / shared link) was shown the success screen because the URL param was trusted as truth.
+
+**A lead / pre-registration is NOT a paid enrollment — store them as separate states.**
+- `LEAD_ENDPOINT` (§4), the `notify` intent, and `localStorage.semiconLead` all capture *leads*. A lead is written on form submit, before and independent of any payment — it means "form filled in," not "paid."
+- Keep `lead` and `paid` as distinct records/statuses. Never promote a lead to "enrolled" without a confirmed payment.
+- **Bug this prevents:** the backend recorded the captured lead as "enrolled," so it believed an unpaid user had already paid.
+
+**Unpaid users MUST be able to (re)start payment.**
+- The `failed` screen's **Retry Payment** button re-runs the pay path for the same lead — abandoned/failed payments are normal and retry is expected.
+- Any duplicate-email / "already registered" check must key on *confirmed payment status* (`status='paid'`), not on the existence of a lead or email. An email with a lead but no confirmed payment must always be allowed to start or retry payment.
+- On a repeat submit for a non-paid user, upsert the existing lead and start a **fresh** payment attempt (new txnid) — don't error out.
+- **Bug this prevents:** the backend blocked retry with "user already enrolled" for someone who had only submitted the form (a lead) and never paid.
+
+**How success/failure must be signalled back to this static page.**
+- The page learns the outcome only via `showStatus('success' | 'failed')`, driven by the `?pay=` return param (Option A) or your explicit call (Option B).
+- Do the authoritative "mark as paid / enrolled" write in your **server-side** verification step — never on the client and never from the redirect param alone.
+- Option A when Easebuzz returns a POST (see §3 note): verify the payment in your endpoint first, then 302-redirect to `/?pay=success` only on a *verified* success, otherwise `/?pay=failed`.
+
+### Suggested data model
+```
+Lead        { id, name, email, phone, intent, createdAt }              // written on submit
+PaymentAttempt { id, leadId, txnid, status: pending|paid|failed, amount, ... }
+```
+Block as "already enrolled" only when a `PaymentAttempt` with `status='paid'` exists for that email/phone. Everything else → allow a new attempt.

@@ -931,6 +931,11 @@
       const q = new URLSearchParams({name:lead.name||'', email:lead.email||'', phone:lead.phone||''});
       url += (url.indexOf('?')>-1 ? '&' : '?') + q.toString();
     }
+    // Mark that a real payment attempt began in THIS tab. On return we only
+    // honour ?pay=success if this flag is present — so a hand-typed / shared
+    // /?pay=success cannot fake the confirmed screen. (Not a substitute for
+    // server-side verification — see HANDOFF.md §6.)
+    sessionStorage.setItem('semiconPayStarted', '1');
     window.location.href = url;
   }
 
@@ -956,17 +961,23 @@
     }
   });
 
-  // On return from Easebuzz, show the right outcome based on the redirect param
+  /* On return from the payment provider, show the right outcome.
+     NOTE: the ?pay= param is only a UX hint — it is NOT proof of payment and is
+     client-controllable. Benefits/enrollment must be granted only after
+     SERVER-SIDE verification of the transaction. See HANDOFF.md §6. */
   (function handlePaymentReturn(){
     const p = new URLSearchParams(location.search);
     const raw = (p.get('pay') || p.get('status') || p.get('payment') || '').toLowerCase();
     if(!raw) return;
-    const paid   = ['success','completed','captured','paid','1','true'].indexOf(raw) > -1;
-    const notYet = ['failed','failure','cancel','cancelled','usercancelled','pending','declined','0','false'].indexOf(raw) > -1;
-    if(paid) showStatus('success');
-    else if(notYet) showStatus('failed');
-    // Clean the query so a refresh doesn't repeat the popup
+    // Strip the query up front so a refresh never repeats the screen.
     history.replaceState(null, '', location.pathname + location.hash);
+    const paid    = ['success','completed','captured','paid','1','true'].indexOf(raw) > -1;
+    const started = sessionStorage.getItem('semiconPayStarted') === '1';
+    sessionStorage.removeItem('semiconPayStarted');
+    // Success only if the provider says paid AND a payment actually began here.
+    // Anything else present-but-not-verified -> Payment Not Completed + Retry.
+    if(paid && started) showStatus('success');
+    else showStatus('failed');
   })();
 </script>
 </body>
