@@ -324,25 +324,26 @@
   .reg-info .danger-text{color:var(--danger);}   /* "Everyone Else Pays More." — persistent red FOMO anchor */
   .reg-lede{color:var(--ink-dim); font-size:15px; margin:12px 0 20px; line-height:1.5;}
 
-  /* benefit items — green fill/tick by default */
+  /* benefit items — flag (✓/✕) left, statement middle, value pill right; green by default */
   .reg-benefits{display:flex; flex-direction:column; gap:11px;}
-  .reg-point{position:relative; display:flex; gap:13px; align-items:center; padding:13px 15px; border:1px solid var(--ok-line); border-radius:14px; background:var(--ok-soft); transition:border-color .4s ease, background .4s ease;}
-  .reg-point .ic{width:36px; height:36px; border-radius:11px; background:rgba(23,178,106,.16); color:var(--ok); display:grid; place-items:center; flex-shrink:0; transition:all .4s ease;}
-  .rp-body{flex:1; min-width:0;}
-  .reg-point b{display:block; font-size:14.5px; margin-bottom:2px; color:#0E7A47; transition:color .4s ease;}
-  .reg-point .rp-body span{font-size:13px; color:var(--ink-dim); line-height:1.45; transition:color .4s ease;}
+  .reg-point{position:relative; display:flex; gap:12px; align-items:center; padding:13px 15px; border:1px solid var(--ok-line); border-radius:14px; background:var(--ok-soft); transition:border-color .4s ease, background .4s ease;}
   .rp-flag{flex-shrink:0; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff; background:var(--ok); box-shadow:0 0 0 4px var(--ok-soft); transition:background .4s ease, box-shadow .4s ease;}
   .rp-flag::after{content:'\2713';}
   .reg-point:nth-child(1) .rp-flag{transition-delay:.03s;}
-  .reg-point:nth-child(2) .rp-flag{transition-delay:.12s;}
-  .reg-point:nth-child(3) .rp-flag{transition-delay:.21s;}
+  .reg-point:nth-child(2) .rp-flag{transition-delay:.10s;}
+  .reg-point:nth-child(3) .rp-flag{transition-delay:.17s;}
+  .reg-point:nth-child(4) .rp-flag{transition-delay:.24s;}
+  .rp-txt{flex:1; min-width:0; font-size:13.5px; line-height:1.45; color:var(--ink-dim); transition:color .4s ease;}
+  .rp-txt b{color:#0E7A47; font-weight:800; transition:color .4s ease;}
+  .rp-val{flex-shrink:0; font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.02em; color:#fff; background:var(--ok); padding:5px 9px; border-radius:999px; white-space:nowrap; transition:background .4s ease;}
   /* RED state ("just notify me") — red text, red ✕, soft red fill, NO strikethrough */
   .reg-info.state-missed .reg-point{border-color:var(--danger-line); background:var(--danger-soft);}
-  .reg-info.state-missed .reg-point .ic{background:rgba(229,72,77,.14); color:var(--danger);}
-  .reg-info.state-missed .reg-point b{color:var(--danger);}
-  .reg-info.state-missed .reg-point .rp-body span{color:#C0555A;}
   .reg-info.state-missed .rp-flag{background:var(--danger); box-shadow:0 0 0 4px var(--danger-soft);}
   .reg-info.state-missed .rp-flag::after{content:'\2715';}
+  .reg-info.state-missed .rp-txt{color:#C0555A;}
+  .reg-info.state-missed .rp-txt b{color:var(--danger);}
+  .reg-info.state-missed .rp-val{background:var(--danger);}
+  @media (max-width:560px){ .reg-point{flex-wrap:wrap;} .rp-txt{flex-basis:calc(100% - 38px);} .rp-val{margin-left:38px;} }
 
   /* reclaim CTA — only shows after choosing notify (blue = the way out of the red) */
   .reg-reclaim{display:none; margin-top:18px; width:100%; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:12px; border:0; cursor:pointer; font-family:var(--display); font-size:15px; font-weight:800; color:#fff; background:var(--blue); box-shadow:0 14px 30px -14px rgba(46,30,224,.6); transition:transform .18s, box-shadow .18s;}
@@ -351,7 +352,7 @@
   .reg-reclaim:hover .btn-arrow{transform:translateX(3px);}
   .reg-info.state-missed .reg-reclaim{display:inline-flex;}
 
-  @media (prefers-reduced-motion:reduce){ .reg-ribbon::after{animation:none; display:none;} .reg-point,.rp-flag,.reg-point .ic,.reg-point b,.reg-ribbon,.reg-body,.danger-text,.reg-reclaim{transition:none;} }
+  @media (prefers-reduced-motion:reduce){ .reg-ribbon::after{animation:none; display:none;} .reg-point,.rp-flag,.rp-txt,.rp-txt b,.rp-val,.reg-ribbon,.reg-body,.reg-reclaim{transition:none;} }
   @media (max-width:600px){ .reg-body{padding:24px 20px 26px;} }
   .form{background:#fff; border:1px solid var(--line); border-radius:20px; padding:30px; box-shadow:var(--sh-card);}
   .intent-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;}
@@ -713,19 +714,24 @@
 
           <ul class="reg-benefits" id="regBenefits">
             <li class="reg-point">
-              <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
-              <div class="rp-body"><b>Your ₹99 is a reservation</b><span>Nothing else is charged until you choose to buy hours.</span></div>
               <span class="rp-flag" aria-hidden="true"></span>
+              <span class="rp-txt">Pre-book <b>₹99</b> unlocks <b>100 + 100 hours free</b> — 200 lab hours for just ₹9,000</span>
+              <span class="rp-val">save ₹9,000</span>
             </li>
             <li class="reg-point">
-              <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
-              <div class="rp-body"><b>Launch pricing, locked</b><span>The Launch Offer disappears once we open to the public.</span></div>
               <span class="rp-flag" aria-hidden="true"></span>
+              <span class="rp-txt">Access to our <b>Recruiter Placement Community</b>, after completing the required skills</span>
+              <span class="rp-val">200+ network</span>
             </li>
             <li class="reg-point">
-              <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
-              <div class="rp-body"><b>See it before you commit</b><span>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</span></div>
               <span class="rp-flag" aria-hidden="true"></span>
+              <span class="rp-txt">Lifetime access to our premium <b>VLSI learning library</b></span>
+              <span class="rp-val">worth ₹1,00,000</span>
+            </li>
+            <li class="reg-point">
+              <span class="rp-flag" aria-hidden="true"></span>
+              <span class="rp-txt">Unlock <b>AI-powered learning</b>, on us</span>
+              <span class="rp-val">Free</span>
             </li>
           </ul>
 
