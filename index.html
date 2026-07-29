@@ -17,6 +17,9 @@
     --ink:#0C1230; --ink-dim:#565E82; --ink-faint:#8A90B0;
     --blue:#2E1EE0; --blue-600:#2417C4; --blue-50:#EFEDFF; --blue-soft:rgba(46,30,224,.10);
     --sky:#4361FF;
+    --danger:#E5484D; --danger-soft:rgba(229,72,77,.10); --danger-line:rgba(229,72,77,.38);
+    --ok:#17B26A; --ok-soft:rgba(23,178,106,.12); --ok-line:rgba(23,178,106,.42);
+    --warn:#E8850C; --warn-soft:rgba(232,133,12,.12); --warn-line:rgba(232,133,12,.38);
     --display:'Source Sans 3',system-ui,sans-serif;
     --mono:'JetBrains Mono',ui-monospace,monospace;
     --hand:'Caveat',cursive;
@@ -93,7 +96,7 @@
   .hero-logos-row{display:flex; align-items:center; gap:34px; flex-wrap:wrap;}
   /* All logos now trimmed to their glyphs, so equal height = equal letter size */
   .hero-logos-row img{height:28px; width:auto; max-height:28px; max-width:180px; object-fit:contain; opacity:.9;}
-  .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin:0 0 14px;}
+  .hero-logos .lbl{font-size:15px; color:var(--ink); font-weight:800; margin:0 0 14px;}
   .hero-logos .lbl b{color:var(--blue);}
   @media (max-width:560px){ .hero-logos-row{gap:22px; justify-content:center;} .hero-logos-row img{height:22px; max-height:22px; max-width:140px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
@@ -301,12 +304,62 @@
 
   /* Register form */
   .reg-grid{display:grid; grid-template-columns:1fr 1.05fr; gap:44px; align-items:center;}
-  .reg-info h2{margin:14px 0;}
-  .reg-info p{color:var(--ink-dim); font-size:16px; margin-bottom:24px;}
-  .reg-point{display:flex; gap:12px; margin-bottom:16px; align-items:flex-start;}
-  .reg-point .ic{width:34px; height:34px; border-radius:10px; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center; flex-shrink:0;}
-  .reg-point b{display:block; font-size:14.5px;}
-  .reg-point span{font-size:13.5px; color:var(--ink-dim);}
+
+  /* ---- Left FOMO card ---- */
+  .reg-info{position:relative; overflow:hidden; background:linear-gradient(180deg,#fff,#FBFBFF); border:1px solid var(--line-strong); border-radius:22px; padding:30px; box-shadow:var(--sh-card);}
+  .reg-info::before{content:''; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--warn),var(--danger)); transition:background .4s ease;}
+  .reg-info.state-missed::before{background:linear-gradient(90deg,var(--danger),#B42318);}
+  .reg-info.state-secured::before{background:linear-gradient(90deg,var(--ok),#0E9155);}
+  .reg-closing{position:absolute; top:16px; right:16px; display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--danger); background:var(--danger-soft); border:1px solid var(--danger-line); padding:5px 10px; border-radius:999px;}
+  .reg-closing .dot{width:7px; height:7px; border-radius:50%; background:var(--danger); animation:fomoPulse 1.6s infinite;}
+  @keyframes fomoPulse{0%{box-shadow:0 0 0 0 rgba(229,72,77,.55)}70%{box-shadow:0 0 0 7px rgba(229,72,77,0)}100%{box-shadow:0 0 0 0 rgba(229,72,77,0)}}
+  .reg-info.state-secured .reg-closing{color:var(--ok); background:var(--ok-soft); border-color:var(--ok-line);}
+  .reg-info.state-secured .reg-closing .dot{background:var(--ok); animation:none;}
+  .reg-info h2{margin:14px 0 0; font-size:clamp(24px,3vw,32px); line-height:1.14;}
+  .reg-info .danger-text{color:var(--danger); transition:color .4s ease;}
+  .reg-info.state-secured h2 .danger-text{color:var(--ok);}
+  .reg-lede{color:var(--ink-dim); font-size:15px; margin:12px 0 18px;}
+
+  /* dynamic alert banner (3 CSS-toggled states) */
+  .reg-alert{margin-bottom:18px; border-radius:12px; padding:11px 14px; font-size:13px; font-weight:600; line-height:1.45; border:1px solid var(--warn-line); background:var(--warn-soft); color:#9A5A05; transition:all .4s ease;}
+  .reg-info.state-missed .reg-alert{border-color:var(--danger-line); background:var(--danger-soft); color:#B42318;}
+  .reg-info.state-secured .reg-alert{border-color:var(--ok-line); background:var(--ok-soft); color:#0E7A47;}
+  .ra-line{display:none; align-items:flex-start; gap:9px;}
+  .ra-ic{font-weight:800; flex-shrink:0;}
+  .reg-alert b{font-weight:800;}
+  .reg-info:not(.state-missed):not(.state-secured) .ra-default{display:flex;}
+  .reg-info.state-missed .ra-missed{display:flex;}
+  .reg-info.state-secured .ra-secured{display:flex;}
+
+  /* benefit items */
+  .reg-benefits{display:flex; flex-direction:column; gap:10px;}
+  .reg-point{position:relative; display:flex; gap:12px; align-items:center; padding:12px 14px; border:1px solid var(--line); border-radius:13px; background:#fff; transition:border-color .4s ease, background .4s ease;}
+  .reg-point .ic{width:34px; height:34px; border-radius:10px; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center; flex-shrink:0; transition:all .4s ease;}
+  .rp-body{flex:1;}
+  .reg-point b{display:block; font-size:14.5px; transition:color .4s ease;}
+  .reg-point span{font-size:13px; color:var(--ink-dim);}
+  .rp-flag{flex-shrink:0; width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff; opacity:0; transform:scale(.3); transition:opacity .35s ease, transform .35s cubic-bezier(.34,1.56,.64,1);}
+  /* MISSED (chose notify) — strike through + red */
+  .reg-info.state-missed .reg-point{border-color:var(--danger-line); background:var(--danger-soft);}
+  .reg-info.state-missed .reg-point .ic{background:rgba(229,72,77,.14); color:var(--danger);}
+  .reg-info.state-missed .reg-point b{color:var(--danger); text-decoration:line-through; text-decoration-thickness:2px;}
+  .reg-info.state-missed .reg-point span{color:#C0555A; text-decoration:line-through;}
+  .reg-info.state-missed .rp-flag{opacity:1; transform:scale(1); background:var(--danger);}
+  .reg-info.state-missed .rp-flag::after{content:'\2715';}
+  /* SECURED (paid) — green ticks */
+  .reg-info.state-secured .reg-point{border-color:var(--ok-line); background:var(--ok-soft);}
+  .reg-info.state-secured .reg-point .ic{background:rgba(23,178,106,.16); color:var(--ok);}
+  .reg-info.state-secured .reg-point b{color:#0E7A47;}
+  .reg-info.state-secured .rp-flag{opacity:1; transform:scale(1); background:var(--ok);}
+  .reg-info.state-secured .rp-flag::after{content:'\2713';}
+
+  /* reclaim CTA — only shows after choosing notify */
+  .reg-reclaim{display:none; margin-top:16px; width:100%; align-items:center; justify-content:center; gap:8px; padding:13px; border-radius:12px; border:0; cursor:pointer; font-family:var(--display); font-size:14.5px; font-weight:800; color:#fff; background:var(--danger); transition:filter .2s;}
+  .reg-reclaim:hover{filter:brightness(1.07);}
+  .reg-info.state-missed .reg-reclaim{display:inline-flex;}
+
+  @media (prefers-reduced-motion:reduce){ .reg-closing .dot{animation:none;} .reg-point,.rp-flag,.reg-point .ic,.reg-point b,.reg-info::before,.reg-alert,.danger-text{transition:none;} }
+  @media (max-width:600px){ .reg-info{padding:26px 20px;} .reg-closing{position:static; margin-bottom:12px;} .reg-info h2{margin-top:4px;} }
   .form{background:#fff; border:1px solid var(--line); border-radius:20px; padding:30px; box-shadow:var(--sh-card);}
   .intent-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;}
   .intent{border:1.5px solid var(--line); border-radius:12px; padding:14px; cursor:pointer; transition:all .18s; text-align:center;}
@@ -655,14 +708,37 @@
   <!-- ============ REGISTER ============ -->
   <section class="section alt" id="register">
     <div class="wrap reg-grid">
-      <div class="reg-info reveal">
+      <div class="reg-info reveal" id="regInfo">
+        <span class="reg-closing"><span class="dot"></span> Pre-launch closing soon</span>
         <div class="eyebrow">Reserve your spot</div>
-        <h2>Two ways in. <span class="grad">Both take 30 seconds.</span></h2>
-        <p>Lock the ₹99 Launch Offer, or just leave your email and we'll notify you the moment we open.</p>
-        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span><div><b>Your ₹99 is a reservation</b><span>Nothing else is charged until you choose to buy hours.</span></div></div>
-        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Launch pricing, locked</b><span>Buy 100 hours, get 100 free — only for early registrants.</span></div></div>
-        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></span><div><b>Only 1,000 spots</b><span>The Launch Offer disappears once we open to the public.</span></div></div>
-        <div class="reg-point"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>See it before you commit</b><span>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</span></div></div>
+        <h2>Early Members Get More.<br><span class="danger-text">Everyone Else Pays More.</span></h2>
+        <p class="reg-lede">Hurry — once the pre-launch closes, these benefits are gone. No second chances.</p>
+
+        <div class="reg-alert" role="status" aria-live="polite">
+          <span class="ra-line ra-default"><span class="ra-ic">⚡</span><span>These benefits lock in <b>only</b> while the pre-launch is open.</span></span>
+          <span class="ra-line ra-missed"><span class="ra-ic">✕</span><span>You skipped the launch benefits below. Reserve for <b>₹99</b> to claim them.</span></span>
+          <span class="ra-line ra-secured"><span class="ra-ic">✓</span><span>Locked in! Every launch benefit below is now <b>yours</b>.</span></span>
+        </div>
+
+        <ul class="reg-benefits" id="regBenefits">
+          <li class="reg-point">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
+            <div class="rp-body"><b>Your ₹99 is a reservation</b><span>Nothing else is charged until you choose to buy hours.</span></div>
+            <span class="rp-flag" aria-hidden="true"></span>
+          </li>
+          <li class="reg-point">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <div class="rp-body"><b>Launch pricing, locked</b><span>The Launch Offer disappears once we open to the public.</span></div>
+            <span class="rp-flag" aria-hidden="true"></span>
+          </li>
+          <li class="reg-point">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <div class="rp-body"><b>See it before you commit</b><span>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</span></div>
+            <span class="rp-flag" aria-hidden="true"></span>
+          </li>
+        </ul>
+
+        <button type="button" class="reg-reclaim" id="regReclaim">Changed your mind? Reserve for ₹99 <span class="btn-arrow">→</span></button>
       </div>
 
       <div class="form reveal">
@@ -884,17 +960,37 @@
 
   const form = document.getElementById('regForm');
   const successBox = document.getElementById('success');
+  const regInfo = document.getElementById('regInfo');
   const setErr = (id,on)=>document.getElementById(id).closest('.field').classList.toggle('err', on);
+
+  // Left FOMO panel: 'secured' (paid -> green ticks), 'missed' (notify -> struck red), null (default)
+  function setRegState(state){
+    if(!regInfo) return;
+    regInfo.classList.remove('state-missed','state-secured');
+    if(state==='missed') regInfo.classList.add('state-missed');
+    else if(state==='secured') regInfo.classList.add('state-secured');
+  }
 
   function resetForm(){
     successBox.classList.remove('show');
     form.style.display='block';
     form.reset();
     setIntent('pay');
+    setRegState(null);
   }
+
+  const regReclaim = document.getElementById('regReclaim');
+  if(regReclaim) regReclaim.addEventListener('click', ()=>{
+    resetForm();
+    document.getElementById('register').scrollIntoView({behavior:'smooth', block:'center'});
+  });
 
   function showStatus(key){
     const s = STATUS[key]; if(!s) return;
+    // Reactive left panel: paid -> green ticks, notify-only -> struck red, else default
+    if(key==='success') setRegState('secured');
+    else if(key==='subscribed') setRegState('missed');
+    else setRegState(null);
     const icon = document.getElementById('statusIcon');
     icon.className = 'big' + (s.cls ? ' '+s.cls : '');
     icon.innerHTML = s.icon;
