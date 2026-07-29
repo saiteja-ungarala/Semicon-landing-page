@@ -93,7 +93,7 @@
   .hero-logos-row{display:flex; align-items:center; gap:34px; flex-wrap:wrap;}
   /* All logos now trimmed to their glyphs, so equal height = equal letter size */
   .hero-logos-row img{height:28px; width:auto; max-height:28px; max-width:180px; object-fit:contain; opacity:.9;}
-  .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin-top:16px;}
+  .hero-logos .lbl{font-size:15px; color:var(--ink-dim); font-weight:600; margin:0 0 14px;}
   .hero-logos .lbl b{color:var(--blue);}
   @media (max-width:560px){ .hero-logos-row{gap:22px; justify-content:center;} .hero-logos-row img{height:22px; max-height:22px; max-width:140px;} .hero-logos .lbl{font-size:14px;} }
   .marker-hl{position:relative; white-space:nowrap;}
@@ -184,7 +184,7 @@
 
   /* Trust strip */
   .trust-strip{padding:30px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(255,255,255,.5);}
-  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .trust-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   .trust-item{text-align:center;}
   .trust-num{font-family:var(--mono); font-size:clamp(24px,3vw,30px); font-weight:700;}
   .trust-label{font-size:11.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.05em; margin-top:6px;}
@@ -236,7 +236,7 @@
   .tool-note{text-align:center; color:var(--ink-dim); font-size:14.5px; max-width:560px; margin:30px auto 0;}
 
   /* How it works */
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
   .step{border-top:2px solid var(--blue); padding-top:18px;}
   .step .n{font-family:var(--mono); font-size:13px; color:var(--ink-faint);}
   .step h3{font-size:17px; margin:12px 0 8px;}
@@ -439,10 +439,11 @@
   <nav>
     <a href="#top" class="logo"><img src="images/logo-wordmark.png" alt="Semicon Labs" style="height:26px;width:auto;" /></a>
     <div class="nav-links">
-      <a href="#tools">Tools</a>
+      <a href="#tools">What's Coming</a>
+      <a href="#who">Who It's For</a>
       <a href="#how">How It Works</a>
       <a href="#offer">The Offer</a>
-      <a href="#who">Who It's For</a>
+      <a href="#register">Reserve now</a>
       <a href="#faq">FAQ</a>
     </div>
     <div class="header-timer" aria-label="Launch offer countdown">
@@ -463,12 +464,12 @@
       <div class="reveal">
         <h1>The world's first<br><span class="grad">cloud VLSI lab.</span></h1>
         <div class="hero-logos">
+          <p class="lbl">Solve real industry projects using</p>
           <div class="hero-logos-row">
             <img src="images/logo-cadence.png" alt="Cadence" />
             <img src="images/logo-synopsys.png" alt="Synopsys" />
             <img src="images/logo-siemens.png" alt="Siemens" />
           </div>
-          <p class="lbl">In your browser — <b>by the hour</b>. No installs, no license queue.</p>
         </div>
 
         <div class="cta-row" id="register-cta">
@@ -488,7 +489,7 @@
         </div>
 
         <div class="reassure-line">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> ₹99 fully renewable</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Your reservation amount is fully redeemable on your first purchase.</span>
         </div>
 
         <div class="spots" style="margin-top:22px;">
@@ -535,9 +536,8 @@
     <div class="wrap">
       <div class="trust-grid reveal">
         <div class="trust-item"><div class="trust-num grad" data-count="3">0</div><div class="trust-label">Industry-Standard EDA Suites</div></div>
-        <div class="trust-item"><div class="trust-num grad" data-count="200" data-suffix="+">0</div><div class="trust-label">Recruiter Network</div></div>
-        <div class="trust-item"><div class="trust-num grad" data-count="2500" data-suffix="+">0</div><div class="trust-label">Engineers Placed Till Now</div></div>
-        <div class="trust-item"><div class="trust-num grad" data-count="100" data-suffix="+100">0</div><div class="trust-label">Launch Offer Hours</div></div>
+        <div class="trust-item"><div class="trust-num grad" data-count="200" data-suffix="+">0</div><div class="trust-label">Placement partners</div></div>
+        <div class="trust-item"><div class="trust-num grad" data-count="1000" data-suffix="+">0</div><div class="trust-label">Test cases ready to solve</div></div>
       </div>
       <div class="badge-row reveal">
         <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg> Secure cloud sessions</div>
@@ -552,12 +552,12 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow center">What's coming</div>
-        <h2>Real tools. Not simulators.</h2>
+        <h2>Don't Just Learn VLSI. Solve It.</h2>
       </div>
       <div class="flows-viewport reveal" style="margin-top:6px;">
         <div class="flows-track" id="flowsTrack"></div>
       </div>
-      <p class="tool-note reveal">Hourly, browser-based access to the same tools used inside production design houses — pay only for the hours you use.</p>
+      <p class="tool-note reveal">Master VLSI through real engineering projects, industry workflows, and professional EDA tools.</p>
     </div>
   </section>
 
@@ -566,7 +566,7 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow center">Who this is for</div>
-        <h2>Wherever you are in a VLSI career.</h2>
+        <h2>Wherever you are in a VLSI industry.</h2>
       </div>
       <div class="who-grid reveal">
         <div class="who-card">
@@ -592,14 +592,13 @@
   <section class="section" id="how">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="eyebrow center">How the launch works</div>
-        <h2>Reserve today. Run real tools on launch day.</h2>
+        <div class="eyebrow center">How the pre-launch works</div>
+        <h2>Reserve today. Unlock double hours, placement access &amp; premium learning.</h2>
       </div>
       <div class="steps reveal">
-        <div class="step"><span class="n">01 / RESERVE</span><h3>Register for ₹99</h3><p>You don't have to take our word for it — ₹99 lets you log in and experience the real platform yourself.</p></div>
+        <div class="step"><span class="n">01 / RESERVE</span><h3>Register for ₹99</h3><p>Your spot is confirmed. You'll receive priority access and all eligible launch-exclusive benefits when Semicon Labs officially launches.</p></div>
         <div class="step"><span class="n">02 / LAUNCH</span><h3>We open the doors</h3><p>You're notified first, ahead of the public. Your offer is already locked in.</p></div>
-        <div class="step"><span class="n">03 / TOP UP</span><h3>Buy 100 hours, get 100 free</h3><p>Add hours whenever you need them — and your launch bonus doubles them.</p></div>
-        <div class="step"><span class="n">04 / BUILD</span><h3>Run tools in your browser</h3><p>Open Cadence, Synopsys or Siemens EDA in a live cloud session — no install.</p></div>
+        <div class="step"><span class="n">03 / BUILD</span><h3>Run tools in your browser</h3><p>Open Cadence, Synopsys or Siemens EDA in a live cloud session — no install.</p></div>
       </div>
     </div>
   </section>
@@ -615,7 +614,7 @@
           <div class="offer-price-row">
             <span class="offer-price">₹99</span>
             <span class="offer-meta">
-              <span class="offer-once">one-time · fully renewable</span>
+              <span class="offer-once">fully redeemable on your first purchase</span>
             </span>
           </div>
         </div>
