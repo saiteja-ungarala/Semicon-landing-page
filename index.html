@@ -305,53 +305,44 @@
   /* Register form */
   .reg-grid{display:grid; grid-template-columns:1fr 1.05fr; gap:44px; align-items:center;}
 
-  /* ---- Left FOMO card (reactive) ---- */
+  /* ---- Left FOMO card (reactive: GREEN by default = Register ₹99; RED = Just notify me) ---- */
   .reg-info{position:relative; overflow:hidden; background:#fff; border:1px solid var(--line-strong); border-radius:22px; box-shadow:var(--sh-card);}
 
   /* state ribbon — same language as the offer card's ribbon */
-  .reg-ribbon{position:relative; overflow:hidden; display:block; text-align:center; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#fff; padding:10px 16px; background:linear-gradient(90deg,var(--warn),var(--danger)); transition:background .4s ease;}
+  .reg-ribbon{position:relative; overflow:hidden; display:block; text-align:center; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#fff; padding:10px 16px; background:linear-gradient(90deg,#17B26A,#0E9155); transition:background .4s ease;}
   .reg-info.state-missed .reg-ribbon{background:linear-gradient(90deg,#E5484D,#B42318);}
-  .reg-info.state-secured .reg-ribbon{background:linear-gradient(90deg,#17B26A,#0E9155);}
   .reg-ribbon span{display:none;}
-  .reg-info:not(.state-missed):not(.state-secured) .rr-default{display:inline;}
+  .reg-info:not(.state-missed) .rr-secured{display:inline;}
   .reg-info.state-missed .rr-missed{display:inline;}
-  .reg-info.state-secured .rr-secured{display:inline;}
-  /* urgency shine — only while the offer is still open */
-  .reg-info:not(.state-missed):not(.state-secured) .reg-ribbon::after{content:''; position:absolute; top:0; left:-45%; width:45%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent); animation:ribbonShine 3s infinite;}
+  /* subtle shine on the green (register) ribbon */
+  .reg-info:not(.state-missed) .reg-ribbon::after{content:''; position:absolute; top:0; left:-45%; width:45%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent); animation:ribbonShine 3s infinite;}
   @keyframes ribbonShine{0%{left:-45%}55%,100%{left:115%}}
 
-  .reg-body{padding:28px 30px 30px; background:radial-gradient(120% 80% at 50% -18%,var(--blue-soft),transparent 55%); transition:background .4s ease;}
+  .reg-body{padding:28px 30px 30px; background:radial-gradient(120% 80% at 50% -18%,var(--ok-soft),transparent 55%); transition:background .4s ease;}
   .reg-info.state-missed .reg-body{background:radial-gradient(120% 80% at 50% -18%,var(--danger-soft),transparent 55%);}
-  .reg-info.state-secured .reg-body{background:radial-gradient(120% 80% at 50% -18%,var(--ok-soft),transparent 55%);}
   .reg-info h2{margin:12px 0 0; font-size:clamp(24px,3vw,31px); line-height:1.14; letter-spacing:-.01em;}
-  .reg-info .danger-text{color:var(--danger); transition:color .4s ease;}
-  .reg-info.state-secured h2 .danger-text{color:var(--ok);}
+  .reg-info .danger-text{color:var(--danger);}   /* "Everyone Else Pays More." — persistent red FOMO anchor */
   .reg-lede{color:var(--ink-dim); font-size:15px; margin:12px 0 20px; line-height:1.5;}
 
-  /* benefit items */
+  /* benefit items — green fill/tick by default */
   .reg-benefits{display:flex; flex-direction:column; gap:11px;}
-  .reg-point{position:relative; display:flex; gap:13px; align-items:center; padding:13px 15px; border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 6px 18px -12px rgba(28,20,120,.28); transition:border-color .4s ease, background .4s ease, box-shadow .4s ease;}
-  .reg-point .ic{width:36px; height:36px; border-radius:11px; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center; flex-shrink:0; transition:all .4s ease;}
+  .reg-point{position:relative; display:flex; gap:13px; align-items:center; padding:13px 15px; border:1px solid var(--ok-line); border-radius:14px; background:var(--ok-soft); transition:border-color .4s ease, background .4s ease;}
+  .reg-point .ic{width:36px; height:36px; border-radius:11px; background:rgba(23,178,106,.16); color:var(--ok); display:grid; place-items:center; flex-shrink:0; transition:all .4s ease;}
   .rp-body{flex:1; min-width:0;}
-  .reg-point b{display:block; font-size:14.5px; margin-bottom:2px; transition:color .4s ease;}
-  .reg-point .rp-body span{font-size:13px; color:var(--ink-dim); line-height:1.45;}
-  .rp-flag{flex-shrink:0; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff; opacity:0; transform:scale(.3); transition:opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;}
-  .reg-point:nth-child(1) .rp-flag{transition-delay:.05s;}
-  .reg-point:nth-child(2) .rp-flag{transition-delay:.16s;}
-  .reg-point:nth-child(3) .rp-flag{transition-delay:.27s;}
-  /* MISSED (chose notify) — strike through + red */
-  .reg-info.state-missed .reg-point{border-color:var(--danger-line); background:var(--danger-soft); box-shadow:none;}
+  .reg-point b{display:block; font-size:14.5px; margin-bottom:2px; color:#0E7A47; transition:color .4s ease;}
+  .reg-point .rp-body span{font-size:13px; color:var(--ink-dim); line-height:1.45; transition:color .4s ease;}
+  .rp-flag{flex-shrink:0; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff; background:var(--ok); box-shadow:0 0 0 4px var(--ok-soft); transition:background .4s ease, box-shadow .4s ease;}
+  .rp-flag::after{content:'\2713';}
+  .reg-point:nth-child(1) .rp-flag{transition-delay:.03s;}
+  .reg-point:nth-child(2) .rp-flag{transition-delay:.12s;}
+  .reg-point:nth-child(3) .rp-flag{transition-delay:.21s;}
+  /* RED state ("just notify me") — red text, red ✕, soft red fill, NO strikethrough */
+  .reg-info.state-missed .reg-point{border-color:var(--danger-line); background:var(--danger-soft);}
   .reg-info.state-missed .reg-point .ic{background:rgba(229,72,77,.14); color:var(--danger);}
-  .reg-info.state-missed .reg-point b{color:var(--danger); text-decoration:line-through; text-decoration-thickness:2px;}
-  .reg-info.state-missed .reg-point .rp-body span{color:#C0555A; text-decoration:line-through;}
-  .reg-info.state-missed .rp-flag{opacity:1; transform:scale(1); background:var(--danger); box-shadow:0 0 0 4px var(--danger-soft);}
+  .reg-info.state-missed .reg-point b{color:var(--danger);}
+  .reg-info.state-missed .reg-point .rp-body span{color:#C0555A;}
+  .reg-info.state-missed .rp-flag{background:var(--danger); box-shadow:0 0 0 4px var(--danger-soft);}
   .reg-info.state-missed .rp-flag::after{content:'\2715';}
-  /* SECURED (paid) — green ticks */
-  .reg-info.state-secured .reg-point{border-color:var(--ok-line); background:var(--ok-soft); box-shadow:none;}
-  .reg-info.state-secured .reg-point .ic{background:rgba(23,178,106,.16); color:var(--ok);}
-  .reg-info.state-secured .reg-point b{color:#0E7A47;}
-  .reg-info.state-secured .rp-flag{opacity:1; transform:scale(1); background:var(--ok); box-shadow:0 0 0 4px var(--ok-soft);}
-  .reg-info.state-secured .rp-flag::after{content:'\2713';}
 
   /* reclaim CTA — only shows after choosing notify (blue = the way out of the red) */
   .reg-reclaim{display:none; margin-top:18px; width:100%; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:12px; border:0; cursor:pointer; font-family:var(--display); font-size:15px; font-weight:800; color:#fff; background:var(--blue); box-shadow:0 14px 30px -14px rgba(46,30,224,.6); transition:transform .18s, box-shadow .18s;}
@@ -712,9 +703,8 @@
     <div class="wrap reg-grid">
       <div class="reg-info reveal" id="regInfo">
         <div class="reg-ribbon" role="status" aria-live="polite">
-          <span class="rr-default">⏳ Pre-launch open · benefits close soon</span>
-          <span class="rr-missed">✕ You skipped these launch benefits</span>
-          <span class="rr-secured">✓ Launch benefits locked to your spot</span>
+          <span class="rr-secured">✓ You're unlocking all these launch benefits</span>
+          <span class="rr-missed">✕ You'll miss these launch benefits</span>
         </div>
         <div class="reg-body">
           <div class="eyebrow">Reserve your spot</div>
@@ -896,6 +886,7 @@
     intentInput.value = v;
     intents.forEach(x=>x.classList.toggle('sel', x.dataset.value===v));
     submitBtn.innerHTML = v==='pay' ? 'Register for ₹99 <span class="btn-arrow">→</span>' : 'Notify Me at Launch <span class="btn-arrow">→</span>';
+    setRegState(v==='notify' ? 'missed' : 'secured');  // live: Register ₹99 -> green, Just notify me -> red
   }
   intents.forEach(x=>x.addEventListener('click', ()=>setIntent(x.dataset.value)));
   // CTAs across the page can preset the intent + scroll to form
@@ -965,12 +956,10 @@
   const regInfo = document.getElementById('regInfo');
   const setErr = (id,on)=>document.getElementById(id).closest('.field').classList.toggle('err', on);
 
-  // Left FOMO panel: 'secured' (paid -> green ticks), 'missed' (notify -> struck red), null (default)
+  // Left FOMO panel: GREEN is the default; add 'state-missed' for the RED (notify) state.
   function setRegState(state){
     if(!regInfo) return;
-    regInfo.classList.remove('state-missed','state-secured');
-    if(state==='missed') regInfo.classList.add('state-missed');
-    else if(state==='secured') regInfo.classList.add('state-secured');
+    regInfo.classList.toggle('state-missed', state==='missed');
   }
 
   function resetForm(){
@@ -989,10 +978,8 @@
 
   function showStatus(key){
     const s = STATUS[key]; if(!s) return;
-    // Reactive left panel: paid -> green ticks, notify-only -> struck red, else default
-    if(key==='success') setRegState('secured');
-    else if(key==='subscribed') setRegState('missed');
-    else setRegState(null);
+    // Reactive left panel: notify-only -> red; every pay-path outcome -> green
+    setRegState(key==='subscribed' ? 'missed' : 'secured');
     const icon = document.getElementById('statusIcon');
     icon.className = 'big' + (s.cls ? ' '+s.cls : '');
     icon.innerHTML = s.icon;
