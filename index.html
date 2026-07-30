@@ -169,15 +169,17 @@
   .fc3{bottom:-14px; left:56px; animation:floatchip 5.5s ease-in-out infinite .5s;}
   @keyframes floatchip{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
 
-  /* Hero media: crossfade between the launch-offer card and the live-session mockup */
-  .hero-media{position:relative; display:grid; grid-template-rows:1fr auto; justify-items:center;}
+  /* Hero media: crossfade between the launch-offer card and the live-session mockup.
+     Both slides share ONE rectangular frame (same width / radius / shadow) so they swap cleanly. */
+  .hero-media{position:relative; display:grid; grid-template-rows:1fr auto; justify-items:center; max-width:500px; width:100%; margin:0 auto;}
   .hm-slide{grid-row:1; grid-column:1; width:100%; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.985); transition:opacity .7s ease, transform .7s ease; pointer-events:none;}
   .hm-slide.is-active{opacity:1; transform:none; pointer-events:auto;}
+  .hm-mockup .mockup-stage{width:100%;}
   .hm-dots{grid-row:2; grid-column:1; display:flex; gap:7px; margin-top:22px;}
   .hm-dot{width:7px; height:7px; border-radius:999px; background:var(--line-strong); transition:all .3s ease; cursor:pointer;}
   .hm-dot.is-active{background:var(--blue); width:22px;}
-  /* Compact offer card used inside the hero */
-  .offer-card--hero{max-width:none; width:100%;}
+  /* Compact offer card used inside the hero — framed like the dashboard rectangle */
+  .offer-card--hero{max-width:none; width:100%; border-radius:16px; box-shadow:0 40px 90px -34px rgba(28,20,120,.4);}
   .offer-card--hero .offer-head{padding:22px 26px 14px;}
   .offer-card--hero .offer-h{font-family:var(--display); font-weight:800; letter-spacing:-.01em; line-height:1.14; text-align:center; font-size:clamp(19px,2.3vw,25px); margin-top:2px;}
   .offer-card--hero .offer-price{font-size:clamp(40px,5vw,54px);}
