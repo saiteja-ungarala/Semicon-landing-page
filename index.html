@@ -168,6 +168,21 @@
   .fc3{bottom:-14px; left:56px; animation:floatchip 5.5s ease-in-out infinite .5s;}
   @keyframes floatchip{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
 
+  /* Hero media: crossfade between the launch-offer card and the live-session mockup */
+  .hero-media{position:relative; display:grid; grid-template-rows:1fr auto; justify-items:center;}
+  .hm-slide{grid-row:1; grid-column:1; width:100%; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.985); transition:opacity .7s ease, transform .7s ease; pointer-events:none;}
+  .hm-slide.is-active{opacity:1; transform:none; pointer-events:auto;}
+  .hm-dots{grid-row:2; grid-column:1; display:flex; gap:7px; margin-top:22px;}
+  .hm-dot{width:7px; height:7px; border-radius:999px; background:var(--line-strong); transition:all .3s ease; cursor:pointer;}
+  .hm-dot.is-active{background:var(--blue); width:22px;}
+  /* Compact offer card used inside the hero */
+  .offer-card--hero{max-width:none; width:100%;}
+  .offer-card--hero .offer-head{padding:22px 26px 14px;}
+  .offer-card--hero .offer-h{font-family:var(--display); font-weight:800; letter-spacing:-.01em; line-height:1.14; text-align:center; font-size:clamp(19px,2.3vw,25px); margin-top:2px;}
+  .offer-card--hero .offer-price{font-size:clamp(40px,5vw,54px);}
+  .offer-card--hero .offer-body{padding:2px 22px 22px;}
+  .offer-card--hero .offer-deal-note{margin-bottom:0; font-size:12px;}
+
   /* 3D glowing chip visual */
   .chip-stage{position:relative; display:flex; align-items:center; justify-content:center;}
   .chip-svg{width:100%; max-width:470px; display:block; overflow:visible;}
@@ -480,7 +495,7 @@
 </head>
 <body>
 
-<div class="topbar"><span class="live"></span> <b>LAUNCHING SOON</b> · New registrations open — lock in for <b>₹99</b>.</div>
+<div class="topbar"><span class="live"></span> <b>LIMITED PRE-LAUNCH OFFER IS LIVE</b> · Lock in for <b>₹99</b> before the offer disappears — Reserve now. Pay less. Get more.</div>
 
 <header id="hdr">
   <nav>
@@ -545,35 +560,82 @@
         </div>
       </div>
 
-      <div class="mockup-stage reveal" aria-hidden="true">
-        <div class="mockup-glow"></div>
-        <div class="mockup-window">
-          <div class="mockup-bar">
-            <span class="mdot r"></span><span class="mdot y"></span><span class="mdot g"></span>
-            <span class="mockup-url">app.semiconlabs.io/session</span>
-            <span class="mockup-live"><span class="liveDot"></span>LIVE SESSION</span>
-          </div>
-          <div class="mockup-body">
-            <div class="mockup-sidebar">
-              <div class="fitem active">▸ floorplan.def</div>
-              <div class="fitem">· top_module.v</div>
-              <div class="fitem">· timing.rpt</div>
-              <div class="fitem">· constraints.sdc</div>
-              <div class="fitem">· outputs/</div>
+      <div class="hero-media reveal" aria-hidden="true">
+        <!-- Slide 1: Launch offer card -->
+        <div class="hm-slide hm-offer is-active">
+          <div class="offer-card offer-card--hero">
+            <span class="offer-ribbon">🔥 Limited Launch Offer · Only 1,000 seats</span>
+            <div class="offer-head">
+              <div class="eyebrow center">The Launch Offer</div>
+              <div class="offer-h">Everything you need to break into VLSI.</div>
+              <div class="offer-price-row">
+                <span class="offer-price">₹99</span>
+                <span class="offer-meta"><span class="offer-once">fully redeemable on your first purchase</span></span>
+              </div>
             </div>
-            <div class="mockup-main">
-              <div class="mockup-canvas" id="chipCanvas"></div>
+            <div class="offer-body">
+              <div class="offer-deal" aria-label="Launch offer pricing">
+                <div class="deal-col deal-now">
+                  <span class="deal-tag">Pre-book · ₹99</span>
+                  <span class="deal-hours">200 lab hours</span>
+                  <span class="deal-sub">100 hrs + 100 free</span>
+                  <span class="deal-was">₹18,000</span>
+                  <span class="deal-price">₹9,000</span>
+                  <span class="deal-save">You save ₹9,000</span>
+                </div>
+                <span class="deal-vs">vs</span>
+                <div class="deal-col deal-later">
+                  <span class="deal-tag">After launch</span>
+                  <span class="deal-hours">Pay-per-use rate</span>
+                  <ul class="deal-rates">
+                    <li><span>100 hours</span><b>₹9,000</b></li>
+                    <li><span>200 hours</span><b>₹18,000</b></li>
+                  </ul>
+                </div>
+              </div>
+              <p class="offer-deal-note">Reserve today and lock the launch rate — <b>200 hours for the price of 100</b>.</p>
             </div>
-          </div>
-          <div class="mockup-footer">
-            <span>Tool: <b>Synopsys VCS</b></span>
-            <span>Session remaining: <b id="sessionTimer">47:12</b></span>
           </div>
         </div>
 
-        <div class="float-chip fc1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>No Install</div>
-        <div class="float-chip fc2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg>Secure Session</div>
-        <div class="float-chip fc3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Pay Per Hour</div>
+        <!-- Slide 2: Live session mockup -->
+        <div class="hm-slide hm-mockup">
+          <div class="mockup-stage">
+            <div class="mockup-glow"></div>
+            <div class="mockup-window">
+              <div class="mockup-bar">
+                <span class="mdot r"></span><span class="mdot y"></span><span class="mdot g"></span>
+                <span class="mockup-url">app.semiconlabs.io/session</span>
+                <span class="mockup-live"><span class="liveDot"></span>LIVE SESSION</span>
+              </div>
+              <div class="mockup-body">
+                <div class="mockup-sidebar">
+                  <div class="fitem active">▸ floorplan.def</div>
+                  <div class="fitem">· top_module.v</div>
+                  <div class="fitem">· timing.rpt</div>
+                  <div class="fitem">· constraints.sdc</div>
+                  <div class="fitem">· outputs/</div>
+                </div>
+                <div class="mockup-main">
+                  <div class="mockup-canvas" id="chipCanvas"></div>
+                </div>
+              </div>
+              <div class="mockup-footer">
+                <span>Tool: <b>Synopsys VCS</b></span>
+                <span>Session remaining: <b id="sessionTimer">47:12</b></span>
+              </div>
+            </div>
+
+            <div class="float-chip fc1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>No Install</div>
+            <div class="float-chip fc2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg>Secure Session</div>
+            <div class="float-chip fc3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Pay Per Hour</div>
+          </div>
+        </div>
+
+        <div class="hm-dots">
+          <span class="hm-dot is-active" data-slide="0"></span>
+          <span class="hm-dot" data-slide="1"></span>
+        </div>
       </div>
     </div>
   </section>
@@ -897,6 +959,24 @@
   intents.forEach(x=>x.addEventListener('click', ()=>setIntent(x.dataset.value)));
   // CTAs across the page can preset the intent + scroll to form
   document.querySelectorAll('[data-intent]').forEach(a=>a.addEventListener('click', ()=>setIntent(a.dataset.intent)));
+
+  // Hero media crossfade: launch-offer card <-> live-session mockup, every 3s
+  (function heroMedia(){
+    const slides = Array.from(document.querySelectorAll('.hero-media .hm-slide'));
+    const dots   = Array.from(document.querySelectorAll('.hm-dots .hm-dot'));
+    if(slides.length < 2) return;
+    let i = 0, timer = null;
+    const show = n => {
+      i = n;
+      slides.forEach((s,k)=>s.classList.toggle('is-active', k===n));
+      dots.forEach((d,k)=>d.classList.toggle('is-active', k===n));
+    };
+    const start = () => { if(!reduce && !timer) timer = setInterval(()=>show((i+1)%slides.length), 3000); };
+    const stop  = () => { clearInterval(timer); timer = null; };
+    dots.forEach((d,k)=>d.addEventListener('click', ()=>{ show(k); stop(); start(); }));
+    show(0);
+    start();
+  })();
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click', ()=>{
