@@ -85,6 +85,7 @@
   .nav-links{display:flex; gap:26px; align-items:center;}
   .nav-links a{font-size:14px; font-weight:600; color:var(--ink-dim); transition:color .15s;}
   .nav-links a:hover{color:var(--ink);}
+  .nav-toggle{display:none; margin-left:12px; cursor:pointer;}
 
   /* Hero */
   .hero{padding:34px 0 26px;}
@@ -358,7 +359,7 @@
   .reg-info.state-missed .rp-txt{color:#C0555A;}
   .reg-info.state-missed .rp-txt b{color:var(--danger);}
   .reg-info.state-missed .rp-val{background:var(--danger);}
-  @media (max-width:560px){ .reg-point{flex-wrap:wrap;} .rp-txt{flex-basis:calc(100% - 38px);} .rp-val{margin-left:38px;} }
+  @media (max-width:560px){ .reg-point{flex-wrap:wrap; align-items:flex-start;} .rp-flag{margin-top:1px;} .rp-txt{flex-basis:calc(100% - 38px);} .rp-val{margin-left:38px;} }
 
   /* reclaim CTA — only shows after choosing notify (blue = the way out of the red) */
   .reg-reclaim{display:none; margin-top:18px; width:100%; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:12px; border:0; cursor:pointer; font-family:var(--display); font-size:15px; font-weight:800; color:#fff; background:var(--blue); box-shadow:0 14px 30px -14px rgba(46,30,224,.6); transition:transform .18s, box-shadow .18s;}
@@ -420,6 +421,14 @@
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
   @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
+  /* ---- Compact nav for narrow desktops / large tablets ---- */
+  @media (max-width:1024px){
+    .nav-links{gap:14px;}
+    .nav-links a{font-size:12.5px;}
+    .header-timer{gap:5px;}
+    .header-timer .ht-lbl{display:none;}
+    .header-timer .ht-box b{font-size:14px;}
+  }
   /* ---- Tablet / small laptop ---- */
   @media (max-width:980px){
     .hero{padding:26px 0 20px;}
@@ -427,17 +436,28 @@
     .mockup-stage{max-width:560px; margin:0 auto;}
     .trust-grid{grid-template-columns:repeat(2,1fr); gap:24px;}
     .steps{grid-template-columns:repeat(2,1fr);}
+    .who-grid{grid-template-columns:repeat(2,1fr);}
     .section{padding:52px 0;}
+  }
+  /* ---- Mobile nav (hamburger) ---- */
+  @media (max-width:900px){
+    .nav-toggle{display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border:1px solid var(--line-strong); border-radius:10px; background:#fff; font-size:20px; line-height:1; color:var(--ink);}
+    .header-timer{margin-left:auto;}
+    .nav-links{display:flex; flex-direction:column; gap:0; position:absolute; top:70px; left:0; right:0; padding:6px 20px 14px; background:rgba(255,255,255,.98); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); border-bottom:1px solid var(--line); box-shadow:var(--sh-card); max-height:0; overflow:hidden; transition:max-height .3s ease;}
+    .nav-links.open{max-height:380px;}
+    .nav-links a{font-size:15px; padding:14px 2px; border-bottom:1px solid var(--line);}
+    .nav-links a:last-child{border-bottom:0;}
   }
   /* ---- Large phone ---- */
   @media (max-width:760px){
-    .nav-links{display:none;}
     .who-grid,.steps{grid-template-columns:1fr;}
+    .hm-dots{gap:4px;}
+    .hm-dot{box-sizing:content-box; padding:16px; background-clip:content-box;}
     .cta-row{flex-direction:column;}
     .cta-option{width:100%;}
     .section{padding:46px 0;}
     .section-head{margin-bottom:26px;}
-    .offer-card{padding:34px 22px;}
+    .offer-card{padding:0;}
     .float-chip{display:none;}
     .mockup-body{grid-template-columns:1fr;}
     .mockup-sidebar{display:none;}
@@ -450,6 +470,8 @@
   /* ---- Phone ---- */
   @media (max-width:560px){
     .wrap{padding:0 18px;}
+    .topbar{font-size:11.5px; padding:8px 14px; line-height:1.45;}
+    .field input{font-size:16px;}
     .hero h1{font-size:clamp(29px,8.6vw,40px);}
     .hero-sub{font-size:16px;}
     .section-head h2{font-size:clamp(23px,6.6vw,30px);}
@@ -500,7 +522,7 @@
 <header id="hdr">
   <nav>
     <a href="#top" class="logo"><img src="images/logo-wordmark.png" alt="Semicon Labs" style="height:26px;width:auto;" /></a>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#tools">What's Coming</a>
       <a href="#who">Who It's For</a>
       <a href="#how">How It Works</a>
@@ -515,6 +537,7 @@
       <span class="ht-box"><b id="cd-m">00</b>m</span>
       <span class="ht-box"><b id="cd-s">00</b>s</span>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">☰</button>
   </nav>
 </header>
 
@@ -959,6 +982,21 @@
   intents.forEach(x=>x.addEventListener('click', ()=>setIntent(x.dataset.value)));
   // CTAs across the page can preset the intent + scroll to form
   document.querySelectorAll('[data-intent]').forEach(a=>a.addEventListener('click', ()=>setIntent(a.dataset.intent)));
+
+  // Mobile nav (hamburger) toggle
+  (function navMenu(){
+    const t = document.getElementById('navToggle');
+    const l = document.getElementById('navLinks');
+    if(!t || !l) return;
+    t.addEventListener('click', ()=>{
+      const open = l.classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    l.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+      l.classList.remove('open');
+      t.setAttribute('aria-expanded','false');
+    }));
+  })();
 
   // Hero media crossfade: launch-offer card <-> live-session mockup, every 3s
   (function heroMedia(){
